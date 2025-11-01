@@ -1,4 +1,4 @@
-import type { User as PrismaUser } from '@prisma/client';
+import type { User as PrismaUser } from '@/prisma-client/generated/prisma';
 
 export type ApiResponse<T> = {
   success: boolean;
