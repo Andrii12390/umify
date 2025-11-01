@@ -2,7 +2,10 @@ import type { Metadata } from 'next';
 
 import { Inter } from 'next/font/google';
 
+import { Toaster } from '@/components/ui/sonner';
+
 import './globals.css';
+import { AppProvider } from '@/providers';
 
 const interSans = Inter({
   variable: '--font-inter-sans',
@@ -14,14 +17,19 @@ export const metadata: Metadata = {
   description: 'Your powerful tool for building awesome UMl-diagrams',
 };
 
-export default function RootLayout({
+function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={`${interSans.variable} antialiased`}>{children}</body>
+      <body className={`${interSans.variable} antialiased`}>
+        <AppProvider>{children}</AppProvider>
+        <Toaster />
+      </body>
     </html>
   );
 }
+
+export default RootLayout;
