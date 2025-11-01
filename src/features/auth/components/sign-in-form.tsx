@@ -63,14 +63,14 @@ export const SignInForm = () => {
           label="Email"
           name="email"
           type="email"
-          data-testid="signIn-password-field"
+          testId="signIn-email-field"
         />
         <TextInputField
           control={form.control}
           label="Password"
           name="password"
           type="password"
-          data-testid="signIn-confirmPassword-field"
+          testId="signIn-password-field"
         />
         <Link
           href={PUBLIC_ROUTES.SIGN_UP}

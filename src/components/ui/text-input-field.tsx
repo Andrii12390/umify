@@ -8,9 +8,16 @@ interface Props<T extends FieldValues> {
   label: string;
   control: Control<T>;
   type?: string;
+  testId?: string;
 }
 
-export const TextInputField = <T extends FieldValues>({ name, label, control, type }: Props<T>) => {
+export const TextInputField = <T extends FieldValues>({
+  name,
+  label,
+  control,
+  type,
+  testId,
+}: Props<T>) => {
   return (
     <FormField
       control={control}
@@ -21,7 +28,7 @@ export const TextInputField = <T extends FieldValues>({ name, label, control, ty
           <FormControl className="bg-input-background">
             <Input
               {...field}
-              data-testid={`${name}-field`}
+              data-testid={testId ?? `${name}-field`}
               autoComplete="off"
               type={type}
             />

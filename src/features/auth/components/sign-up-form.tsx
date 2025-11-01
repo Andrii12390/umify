@@ -70,32 +70,32 @@ export const SignUpForm = () => {
           label="Email"
           name="email"
           type="email"
-          data-testid="signUp-email-field"
+          testId="signUp-email-field"
         />
         <TextInputField
           control={form.control}
           label="Username"
           name="username"
           type="text"
-          data-testid="signUp-username-field"
+          testId="signUp-username-field"
         />
         <TextInputField
           control={form.control}
           label="Password"
           name="password"
           type="password"
-          data-testid="signUp-password-field"
+          testId="signUp-password-field"
         />
         <TextInputField
           control={form.control}
           label="Confirm Password"
           name="confirmPassword"
           type="password"
-          data-testid="signUp-confirmPassword-field"
+          testId="signUp-confirmPassword-field"
         />
         <Link
           href={PUBLIC_ROUTES.SIGN_IN}
-          data-testid="login-link"
+          data-testid="signUp-login-link"
           className="text-sm"
         >
           Already have an account?
