@@ -40,6 +40,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate Prisma Client
+        run: |
+          if [ -f "prisma/schema.prisma" ]; then
+            echo "Prisma schema found, generating client..."
+            pnpm prisma generate
+          else
+            echo "No Prisma schema found, skipping..."
+          fi
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
       - name: Linting
         run: pnpm lint
 
