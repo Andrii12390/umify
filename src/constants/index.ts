@@ -5,5 +5,7 @@ export const PUBLIC_ROUTES = {
 } as const;
 
 export const PRIVATE_ROUTES = {
-  LOBBY: '/lobby',
+  DIAGRAMS: '/diagrams',
+  PROFILE: '/profile',
+  SETTINGS: '/settings',
 } as const;

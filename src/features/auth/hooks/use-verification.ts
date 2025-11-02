@@ -20,7 +20,7 @@ export const useVerification = () => {
     if (!res.success) {
       setError(res.message);
     } else {
-      router.replace(PRIVATE_ROUTES.LOBBY);
+      router.replace(PRIVATE_ROUTES.DIAGRAMS);
     }
     setIsSubmitting(false);
   };

@@ -9,7 +9,7 @@ export const SocialOptions = () => {
   const signInGoogle = async () => {
     try {
       await signIn(PROVIDERS.GOOGLE, {
-        callbackUrl: PRIVATE_ROUTES.LOBBY,
+        callbackUrl: PRIVATE_ROUTES.DIAGRAMS,
       });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : String(error));
@@ -19,7 +19,7 @@ export const SocialOptions = () => {
   const signInGitHub = async () => {
     try {
       await signIn(PROVIDERS.GITHUB, {
-        callbackUrl: PRIVATE_ROUTES.LOBBY,
+        callbackUrl: PRIVATE_ROUTES.DIAGRAMS,
       });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : String(error));
