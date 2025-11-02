@@ -37,7 +37,7 @@ export const SignInForm = () => {
       });
 
       if (result?.ok) {
-        router.push(PRIVATE_ROUTES.LOBBY);
+        router.push(PRIVATE_ROUTES.DIAGRAMS);
       }
     } catch (error) {
       form.setError('root', {
