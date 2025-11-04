@@ -9,6 +9,7 @@ interface Props<T extends FieldValues> {
   control: Control<T>;
   type?: string;
   testId?: string;
+  placeholder?: string;
 }
 
 export const TextInputField = <T extends FieldValues>({
@@ -17,6 +18,7 @@ export const TextInputField = <T extends FieldValues>({
   control,
   type,
   testId,
+  placeholder,
 }: Props<T>) => {
   return (
     <FormField
@@ -29,6 +31,7 @@ export const TextInputField = <T extends FieldValues>({
             <Input
               {...field}
               data-testid={testId ?? `${name}-field`}
+              placeholder={placeholder && ''}
               autoComplete="off"
               type={type}
             />
