@@ -2,16 +2,19 @@
 
 import { revalidatePath } from 'next/cache';
 
+import type { Diagram } from '@/prisma-client/generated/prisma';
+import type { ActionResult } from '@/types';
+
 import { getUser } from '@/actions';
 import { PRIVATE_ROUTES } from '@/constants';
 import { prisma } from '@/lib/prisma';
 
-export async function createDiagram(name: string) {
+export async function createDiagram(name: string): Promise<ActionResult<Diagram>> {
   try {
     const user = await getUser();
 
     if (!user) {
-      return null;
+      return { success: false, error: 'Unauthorized' };
     }
 
     const diagram = await prisma.diagram.create({
@@ -23,8 +26,8 @@ export async function createDiagram(name: string) {
 
     revalidatePath(PRIVATE_ROUTES.DIAGRAMS);
 
-    return diagram;
+    return { success: true, data: diagram };
   } catch {
-    return null;
+    return { success: false, error: 'Failed to create diagram' };
   }
 }

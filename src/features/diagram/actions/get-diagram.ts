@@ -1,23 +1,32 @@
 'use server';
 
+import type { Diagram } from '@/prisma-client/generated/prisma';
+import type { ActionResult } from '@/types';
+
 import { getUser } from '@/actions';
 import { prisma } from '@/lib/prisma';
 
-export async function getDiagram(id: string) {
+export async function getDiagram(id: string): Promise<ActionResult<Diagram>> {
   try {
     const user = await getUser();
 
     if (!user) {
-      return null;
+      return { success: false, error: 'Unauthorized' };
     }
 
-    return prisma.diagram.findFirst({
+    const newDiagram = await prisma.diagram.findFirst({
       where: {
         id,
         userId: user.id,
       },
     });
+
+    if (!newDiagram) {
+      throw new Error();
+    }
+
+    return { success: true, data: newDiagram };
   } catch {
-    return null;
+    return { success: false, error: 'Failed to get diagram' };
   }
 }

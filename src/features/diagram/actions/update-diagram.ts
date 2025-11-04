@@ -2,16 +2,25 @@
 
 import { revalidatePath } from 'next/cache';
 
+import type { Diagram } from '@/prisma-client/generated/prisma';
+import type { ActionResult } from '@/types';
+
 import { getUser } from '@/actions';
 import { PRIVATE_ROUTES } from '@/constants';
 import { prisma } from '@/lib/prisma';
 
-export async function updateDiagram({ id, name }: { id: string; name: string }) {
+export async function updateDiagram({
+  id,
+  name,
+}: {
+  id: string;
+  name: string;
+}): Promise<ActionResult<Diagram>> {
   try {
     const user = await getUser();
 
     if (!user) {
-      return null;
+      return { success: false, error: 'Unauthorized' };
     }
 
     const existingDiagram = await prisma.diagram.findFirst({
@@ -22,7 +31,7 @@ export async function updateDiagram({ id, name }: { id: string; name: string }) 
     });
 
     if (!existingDiagram) {
-      return null;
+      return { success: false, error: 'Diagram not found' };
     }
 
     const diagram = await prisma.diagram.update({
@@ -34,8 +43,8 @@ export async function updateDiagram({ id, name }: { id: string; name: string }) 
 
     revalidatePath(PRIVATE_ROUTES.DIAGRAMS);
 
-    return diagram;
+    return { success: true, data: diagram };
   } catch {
-    return null;
+    return { success: false, error: 'Failed to update diagram' };
   }
 }

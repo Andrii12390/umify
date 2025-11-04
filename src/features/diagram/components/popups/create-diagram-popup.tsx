@@ -1,5 +1,7 @@
 import type { PropsWithChildren } from 'react';
 
+import { toast } from 'sonner';
+
 import { createDiagram } from '@/features/diagram/actions';
 
 import { DiagramPopup } from './diagram-popup';
@@ -11,7 +13,11 @@ export const CreateDiagramPopup = ({ children }: PropsWithChildren) => {
       submitLabel="Save"
       onSubmit={(values, { reset }) => {
         reset();
-        createDiagram(values.name);
+        createDiagram(values.name).then(res => {
+          if (!res.success) {
+            toast.error(res.error);
+          }
+        });
       }}
     >
       {children}

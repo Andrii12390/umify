@@ -1,6 +1,7 @@
 import type { PropsWithChildren, Dispatch, SetStateAction } from 'react';
 
 import { Trash2, SquarePen } from 'lucide-react';
+import { toast } from 'sonner';
 
 import {
   DropdownMenu,
@@ -36,7 +37,11 @@ export const DiagramActions = ({ id, name, isOpen, setIsOpen, children }: Props)
         <UpdateDiagramPopup
           name={name}
           handleUpdate={values => {
-            updateDiagram({ id, ...values });
+            updateDiagram({ id, ...values }).then(res => {
+              if (!res.success) {
+                toast.error(res.error);
+              }
+            });
           }}
         >
           <DropdownMenuItem
@@ -49,7 +54,13 @@ export const DiagramActions = ({ id, name, isOpen, setIsOpen, children }: Props)
         </UpdateDiagramPopup>
         <DropdownMenuItem
           className="flex items-center justify-between"
-          onClick={() => deleteDiagram(id)}
+          onClick={() => {
+            deleteDiagram(id).then(res => {
+              if (!res.success) {
+                toast.error(res.error);
+              }
+            });
+          }}
         >
           <span>Delete</span>
           <Trash2 className="text-destructive" />

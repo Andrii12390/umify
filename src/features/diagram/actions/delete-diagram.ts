@@ -2,16 +2,19 @@
 
 import { revalidatePath } from 'next/cache';
 
+import type { Diagram } from '@/prisma-client/generated/prisma';
+import type { ActionResult } from '@/types';
+
 import { getUser } from '@/actions';
 import { PRIVATE_ROUTES } from '@/constants';
 import { prisma } from '@/lib/prisma';
 
-export async function deleteDiagram(id: string) {
+export async function deleteDiagram(id: string): Promise<ActionResult<Diagram>> {
   try {
     const user = await getUser();
 
     if (!user) {
-      return null;
+      return { success: false, error: 'Unauthorized' };
     }
 
     const existingDiagram = await prisma.diagram.findFirst({
@@ -22,17 +25,17 @@ export async function deleteDiagram(id: string) {
     });
 
     if (!existingDiagram) {
-      return null;
+      return { success: false, error: 'Diagram not found' };
     }
 
-    await prisma.diagram.delete({
+    const deletedDiagram = await prisma.diagram.delete({
       where: { id },
     });
 
     revalidatePath(PRIVATE_ROUTES.DIAGRAMS);
 
-    return { success: true, data: { id } };
+    return { success: true, data: deletedDiagram };
   } catch {
-    return null;
+    return { success: false, error: 'Failed to delete diagram' };
   }
 }
