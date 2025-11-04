@@ -3,7 +3,7 @@
 import { BarChart3, Clock, MoreVertical } from 'lucide-react';
 import { useState } from 'react';
 
-import { DiagramActions } from '@/features/diagram/components/diagram-actions';
+import { DiagramActions } from '@/features/diagram/components/card/diagram-actions';
 
 interface Props {
   id: string;

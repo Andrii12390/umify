@@ -3,7 +3,7 @@
 import { Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { CreateDiagramPopup } from '@/features/diagram/components/create-diagram-popup';
+import { CreateDiagramPopup } from '@/features/diagram/components/popups/create-diagram-popup';
 
 export const CreateDiagramCard = () => {
   return (

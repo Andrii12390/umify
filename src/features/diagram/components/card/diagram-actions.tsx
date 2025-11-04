@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 import { deleteDiagram, updateDiagram } from '@/features/diagram/actions';
-import { UpdateDiagramPopup } from '@/features/diagram/components/update-diagram-popup';
+import { UpdateDiagramPopup } from '@/features/diagram/components/popups/update-diagram-popup';
 
 interface Props extends PropsWithChildren {
   id: string;

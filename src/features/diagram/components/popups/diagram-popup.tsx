@@ -15,9 +15,9 @@ import {
 import { Form } from '@/components/ui/form';
 import { TextInputField } from '@/components/ui/text-input-field';
 
-import type { DiagramFormValues } from '../schemas';
+import type { DiagramFormValues } from '../../schemas';
 
-import { DiagramFormSchema } from '../schemas';
+import { DiagramFormSchema } from '../../schemas';
 
 interface Props extends PropsWithChildren {
   title: string;
