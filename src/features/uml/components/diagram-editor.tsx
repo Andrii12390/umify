@@ -9,14 +9,23 @@ import {
   ReactFlowProvider,
 } from 'reactflow';
 
+import type { DiagramData } from '@/features/uml/schemas';
+
 import { Toolbar } from '@/features/uml/components/toolbar';
 import { edgeTypes, nodeTypes } from '@/features/uml/config';
-import { useDiagramEditor } from '@/features/uml/hooks';
 
 import 'reactflow/dist/style.css';
 import 'reactflow/dist/base.css';
 
-const DiagramEditorInner = () => {
+import { useDiagramEditor } from '@/features/uml/hooks';
+
+const DiagramEditorInner = ({
+  diagramId,
+  initialData,
+}: {
+  diagramId: string;
+  initialData: DiagramData | null;
+}) => {
   const {
     nodes,
     edges,
@@ -31,11 +40,12 @@ const DiagramEditorInner = () => {
     addUseCaseNode,
     addNoteNode,
     addSystemBoundaryNode,
-  } = useDiagramEditor();
+  } = useDiagramEditor(initialData);
 
   return (
     <div className="relative h-full w-full">
       <Toolbar
+        diagramId={diagramId}
         selectedEdgeType={selectedEdgeType}
         onEdgeTypeChange={setSelectedEdgeType}
         onAddActor={addActorNode}
@@ -48,7 +58,7 @@ const DiagramEditorInner = () => {
         connectionMode={ConnectionMode.Loose}
         nodes={nodes}
         edges={edges}
-        connectionRadius={1}
+        connectionRadius={Infinity}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
@@ -65,8 +75,17 @@ const DiagramEditorInner = () => {
   );
 };
 
-export const DiagramEditor = () => (
+export const DiagramEditor = ({
+  diagramId,
+  initialData,
+}: {
+  diagramId: string;
+  initialData: DiagramData | null;
+}) => (
   <ReactFlowProvider>
-    <DiagramEditorInner />
+    <DiagramEditorInner
+      diagramId={diagramId}
+      initialData={initialData}
+    />
   </ReactFlowProvider>
 );

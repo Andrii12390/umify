@@ -15,6 +15,8 @@ import {
 } from 'reactflow';
 import { toast } from 'sonner';
 
+import type { DiagramData } from '@/features/uml/schemas';
+
 import { isValidConnection } from '@/features/uml/utils/is-valid-connection';
 
 import type { EdgeType, LabelEdgeData } from '../types';
@@ -42,13 +44,38 @@ type UseDiagramEditorResult = {
   addSystemBoundaryNode: () => void;
 };
 
-export const useDiagramEditor = (): UseDiagramEditorResult => {
+export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEditorResult => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<LabelEdgeData>([]);
   const [selectedEdgeType, setSelectedEdgeType] = useState<EdgeType>('association');
   const [connectStart, setConnectStart] = useState<OnConnectStartParams | null>(null);
 
   const reactFlow = useReactFlow();
+
+  useEffect(() => {
+    if (!initialData || !reactFlow) return;
+
+    const nodesWithStyle = initialData.nodes.map(node => {
+      const hasDimensions = node.width != null && node.height != null;
+
+      return {
+        ...node,
+        style: hasDimensions
+          ? {
+              ...(node.style || {}),
+              width: node.width,
+              height: node.height,
+              zIndex: node.type === 'systemBoundary' ? -1 : 100,
+            }
+          : node.style,
+      };
+    });
+
+    setNodes(nodesWithStyle);
+    setEdges(initialData.edges as Edge<LabelEdgeData>[]);
+
+    reactFlow.setViewport(initialData.viewport);
+  }, [initialData, reactFlow]);
 
   const onEdgeLabelChange = useCallback(
     (edgeId: string, label: string | undefined) => {

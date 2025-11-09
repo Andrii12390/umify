@@ -1,3 +1,5 @@
+import { useReactFlow } from 'reactflow';
+
 import type { EdgeType } from '@/features/uml/types';
 
 import { Button } from '@/components/ui/button';
@@ -8,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { saveDiagram } from '@/features/uml/actions';
 import { DIAGRAM_CLS } from '@/features/uml/constants';
 
 const NODE_BUTTONS = [
@@ -26,6 +29,7 @@ const EDGE_LABELS: Record<EdgeType, string> = {
 };
 
 type Props = {
+  diagramId: string;
   selectedEdgeType: EdgeType;
   onEdgeTypeChange: (type: EdgeType) => void;
   onAddActor: () => void;
@@ -35,6 +39,7 @@ type Props = {
 };
 
 export const Toolbar = ({
+  diagramId,
   selectedEdgeType,
   onEdgeTypeChange,
   onAddActor,
@@ -43,6 +48,7 @@ export const Toolbar = ({
   onAddBoundary,
 }: Props) => {
   const nodeHandlers = [onAddActor, onAddUseCase, onAddNote, onAddBoundary];
+  const { toObject } = useReactFlow();
 
   return (
     <div className={DIAGRAM_CLS.toolbar}>
@@ -59,6 +65,14 @@ export const Toolbar = ({
               {button.label}
             </Button>
           ))}
+          <Button
+            size="sm"
+            onClick={() => {
+              saveDiagram(diagramId, JSON.stringify(toObject()));
+            }}
+          >
+            save diagram
+          </Button>
         </div>
       </div>
 
