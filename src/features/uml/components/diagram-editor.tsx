@@ -12,11 +12,12 @@ import {
 import type { DiagramData } from '@/features/uml/schemas';
 
 import { Toolbar } from '@/features/uml/components/toolbar';
-import { edgeTypes, nodeTypes } from '@/features/uml/config';
+import { DownloadMenu } from '@/features/uml/components/toolbar/download-menu';
 
 import 'reactflow/dist/style.css';
 import 'reactflow/dist/base.css';
 
+import { edgeTypes, nodeTypes } from '@/features/uml/config';
 import { useDiagramEditor } from '@/features/uml/hooks';
 
 const DiagramEditorInner = ({
@@ -67,6 +68,7 @@ const DiagramEditorInner = ({
         onConnectStart={onConnectStart}
         onConnectEnd={onConnectEnd}
       >
+        <DownloadMenu />
         <Background />
         <Controls />
         <MiniMap />
