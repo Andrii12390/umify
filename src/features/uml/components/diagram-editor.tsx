@@ -1,22 +1,16 @@
 'use client';
 
-import {
-  Background,
-  ConnectionMode,
-  Controls,
-  MiniMap,
-  ReactFlow,
-  ReactFlowProvider,
-} from 'reactflow';
+import { Background, Controls, MiniMap, ReactFlow, ReactFlowProvider } from 'reactflow';
 
 import type { DiagramData } from '@/features/uml/schemas';
 
-import { Toolbar } from '@/features/uml/components/toolbar';
-import { DownloadMenu } from '@/features/uml/components/toolbar/download-menu';
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 
 import 'reactflow/dist/style.css';
 import 'reactflow/dist/base.css';
 
+import { Toolbar } from '@/features/uml/components/toolbar';
+import { DownloadMenu } from '@/features/uml/components/toolbar/download-menu';
 import { edgeTypes, nodeTypes } from '@/features/uml/config';
 import { useDiagramEditor } from '@/features/uml/hooks';
 
@@ -44,35 +38,42 @@ const DiagramEditorInner = ({
   } = useDiagramEditor(initialData);
 
   return (
-    <div className="relative h-full w-full">
-      <Toolbar
-        diagramId={diagramId}
-        selectedEdgeType={selectedEdgeType}
-        onEdgeTypeChange={setSelectedEdgeType}
-        onAddActor={addActorNode}
-        onAddUseCase={addUseCaseNode}
-        onAddNote={addNoteNode}
-        onAddBoundary={addSystemBoundaryNode}
-      />
-
-      <ReactFlow
-        connectionMode={ConnectionMode.Loose}
-        nodes={nodes}
-        edges={edges}
-        connectionRadius={Infinity}
-        nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onConnectStart={onConnectStart}
-        onConnectEnd={onConnectEnd}
-      >
-        <DownloadMenu />
-        <Background />
-        <Controls />
-        <MiniMap />
-      </ReactFlow>
+    <div className="relative flex h-full w-full">
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel
+          className="min-w-30"
+          defaultSize={20}
+        >
+          <Toolbar
+            selectedEdgeType={selectedEdgeType}
+            onEdgeTypeChange={setSelectedEdgeType}
+            onAddActor={addActorNode}
+            onAddUseCase={addUseCaseNode}
+            onAddNote={addNoteNode}
+            onAddBoundary={addSystemBoundaryNode}
+          />
+        </ResizablePanel>
+        <ResizableHandle />
+        <ResizablePanel>
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            connectionRadius={Infinity}
+            nodeTypes={nodeTypes}
+            edgeTypes={edgeTypes}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onConnectStart={onConnectStart}
+            onConnectEnd={onConnectEnd}
+          >
+            <DownloadMenu />
+            <Background />
+            <Controls />
+            <MiniMap />
+          </ReactFlow>
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </div>
   );
 };

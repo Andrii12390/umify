@@ -1,35 +1,17 @@
-import { useReactFlow } from 'reactflow';
+import { clsx } from 'clsx';
+import Image from 'next/image';
 
 import type { EdgeType } from '@/features/uml/types';
 
-import { Button } from '@/components/ui/button';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { saveDiagram } from '@/features/uml/actions';
-import { DIAGRAM_CLS } from '@/features/uml/constants';
-
-const NODE_BUTTONS = [
-  { label: 'Actor', onClick: (onAdd: () => void) => onAdd, variant: 'default' as const },
-  { label: 'Use Case', onClick: (onAdd: () => void) => onAdd, variant: 'default' as const },
-  { label: 'Note', onClick: (onAdd: () => void) => onAdd, variant: 'outline' as const },
-  { label: 'Boundary', onClick: (onAdd: () => void) => onAdd, variant: 'outline' as const },
-] as const;
-
-const EDGE_TYPES: EdgeType[] = ['association', 'include', 'extend', 'generalization'];
-const EDGE_LABELS: Record<EdgeType, string> = {
-  association: 'Association',
-  include: 'Include',
-  extend: 'Extend',
-  generalization: 'Generalization',
-};
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
 
 type Props = {
-  diagramId: string;
   selectedEdgeType: EdgeType;
   onEdgeTypeChange: (type: EdgeType) => void;
   onAddActor: () => void;
@@ -39,7 +21,6 @@ type Props = {
 };
 
 export const Toolbar = ({
-  diagramId,
   selectedEdgeType,
   onEdgeTypeChange,
   onAddActor,
@@ -47,60 +28,98 @@ export const Toolbar = ({
   onAddNote,
   onAddBoundary,
 }: Props) => {
-  const nodeHandlers = [onAddActor, onAddUseCase, onAddNote, onAddBoundary];
-  const { toObject } = useReactFlow();
+  const componentGroups = [
+    {
+      title: 'Use Case',
+      items: [
+        { iconSrc: '/uml/actor.svg', label: 'Actor', onClick: onAddActor },
+        { iconSrc: '/uml/use-case.svg', label: 'Use Case', onClick: onAddUseCase },
+        { iconSrc: '/uml/system-boundary.svg', label: 'System Boundary', onClick: onAddBoundary },
+        { iconSrc: '/uml/text.svg', label: 'Text', onClick: onAddNote },
+      ],
+    },
+    {
+      title: 'Arrows',
+      items: [
+        {
+          iconSrc: '/arrows/association.svg',
+          label: 'Association',
+          onClick: () => onEdgeTypeChange('association'),
+          edgeType: 'association',
+        },
+        {
+          iconSrc: '/arrows/include.svg',
+          label: 'Include',
+          onClick: () => onEdgeTypeChange('include'),
+          edgeType: 'include',
+        },
+        {
+          iconSrc: '/arrows/extend.svg',
+          label: 'Extend',
+          onClick: () => onEdgeTypeChange('extend'),
+          edgeType: 'extend',
+        },
+        {
+          iconSrc: '/arrows/generalization.svg',
+          label: 'Generalization',
+          onClick: () => onEdgeTypeChange('generalization'),
+          edgeType: 'generalization',
+        },
+      ],
+    },
+  ];
 
   return (
-    <div className={DIAGRAM_CLS.toolbar}>
-      <div className="space-y-2">
-        <div className={DIAGRAM_CLS.toolbarLabel}>Nodes</div>
-        <div className="flex flex-wrap gap-2">
-          {NODE_BUTTONS.map((button, i) => (
-            <Button
-              key={button.label}
-              size="sm"
-              variant={button.variant}
-              onClick={nodeHandlers[i]}
-            >
-              {button.label}
-            </Button>
-          ))}
-          <Button
-            size="sm"
-            onClick={() => {
-              saveDiagram(diagramId, JSON.stringify(toObject()));
-            }}
+    <aside className="bg-card h-full p-2">
+      <Accordion
+        type="multiple"
+        defaultValue={['Use Case', 'Arrows']}
+        className="w-full space-y-2"
+      >
+        {componentGroups.map(({ title, items }) => (
+          <AccordionItem
+            key={title}
+            value={title}
+            className="border-border border-b last:border-b-0"
           >
-            save diagram
-          </Button>
-        </div>
-      </div>
+            <AccordionTrigger className="hover:bg-accent hover:text-accent-foreground mb-1 p-3 text-sm font-medium text-nowrap no-underline!">
+              {title}
+            </AccordionTrigger>
+            <AccordionContent className="px-3 pb-4">
+              <div className="flex flex-wrap items-center gap-2">
+                {items.map(item => {
+                  const { iconSrc, label, onClick } = item;
+                  const isSelected = 'edgeType' in item && item.edgeType === selectedEdgeType;
 
-      <div className="space-y-2">
-        <div className={DIAGRAM_CLS.toolbarLabel}>Connection Type</div>
-        <Select
-          value={selectedEdgeType}
-          onValueChange={onEdgeTypeChange}
-        >
-          <SelectTrigger className="h-8 w-44 text-xs">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="text-xs">
-            {EDGE_TYPES.map(type => (
-              <SelectItem
-                key={type}
-                value={type}
-              >
-                {EDGE_LABELS[type]}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className={DIAGRAM_CLS.hint}>
-        Delete/Backspace to delete • double click on label to edit
-      </div>
-    </div>
+                  return (
+                    <Button
+                      key={label}
+                      size="icon"
+                      variant="outline"
+                      onClick={onClick}
+                      title={label}
+                      className={clsx(
+                        'size-12 cursor-pointer rounded-md border transition-colors',
+                        isSelected
+                          ? 'bg-primary/15 border-primary shadow-sm'
+                          : 'hover:bg-primary/15 hover:border-primary',
+                      )}
+                    >
+                      <Image
+                        src={iconSrc}
+                        width={28}
+                        height={28}
+                        alt={label}
+                        className="size-7"
+                      />
+                    </Button>
+                  );
+                })}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </aside>
   );
 };
