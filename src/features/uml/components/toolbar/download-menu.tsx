@@ -1,5 +1,6 @@
-import { Download, FileText, Image } from 'lucide-react';
+import { Download, FileText, Image, Save } from 'lucide-react';
 import { Panel, useReactFlow } from 'reactflow';
+import { toast } from 'sonner';
 
 import type { ExportFormat } from '@/features/uml/utils';
 
@@ -11,9 +12,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { saveDiagram } from '@/features/uml/actions';
 import { DEFAULT_OPTIONS, makeExportHandler } from '@/features/uml/utils';
 
 interface Props {
+  diagramId: string;
   width?: number;
   height?: number;
   backgroundColor?: string | null;
@@ -29,6 +32,7 @@ const dropdownItems = [
 ];
 
 export const DownloadMenu = ({
+  diagramId,
   width = DEFAULT_OPTIONS.width,
   height = DEFAULT_OPTIONS.height,
   backgroundColor = DEFAULT_OPTIONS.backgroundColor,
@@ -36,7 +40,7 @@ export const DownloadMenu = ({
   pixelRatio = DEFAULT_OPTIONS.pixelRatio,
 }: Props) => {
   const reactFlow = useReactFlow();
-
+  const { toObject } = useReactFlow();
   const handleExport = makeExportHandler(
     {
       ...reactFlow,
@@ -45,12 +49,31 @@ export const DownloadMenu = ({
     { width, height, backgroundColor, pixelRatio },
   );
 
+  const handleSave = () =>
+    saveDiagram(diagramId, JSON.stringify(toObject())).then(res => {
+      if (!res.success) {
+        toast.error(res.error);
+      } else {
+        toast.success('Diagram saved successfully');
+      }
+    });
+
   return (
-    <Panel position="top-right">
+    <Panel
+      position="top-right"
+      className="flex gap-2"
+    >
+      <Button
+        className="rounded-lg shadow-md"
+        variant="outline"
+        onClick={handleSave}
+      >
+        <Save className="size-4" /> Save
+      </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button className="rounded-lg shadow-md">
-            <Download className="size-4" /> Export Diagram
+            <Download className="size-4" /> Export
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent

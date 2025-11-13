@@ -67,7 +67,7 @@ const DiagramEditorInner = ({
             onConnectStart={onConnectStart}
             onConnectEnd={onConnectEnd}
           >
-            <DownloadMenu />
+            <DownloadMenu diagramId={diagramId} />
             <Background />
             <Controls />
             <MiniMap />
