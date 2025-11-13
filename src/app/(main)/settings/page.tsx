@@ -1,5 +1,7 @@
+import { ThemeSwitcher } from '@/features/settings/components/theme-switcher';
+
 function SettingsPage() {
-  return <p>Settings</p>;
+  return <ThemeSwitcher />;
 }
 
 export default SettingsPage;
