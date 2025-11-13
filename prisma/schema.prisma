@@ -45,6 +45,7 @@ model Diagram {
 
   User      User     @relation(fields: [userId], references: [id])
   userId    String
+  data      Json     @default("{}")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 }
