@@ -17,3 +17,10 @@ export const THEME_OPTIONS = [
     icon: Monitor,
   },
 ];
+
+export const SAVE_INTERVALS = [
+  { value: 1, label: '1 min' },
+  { value: 5, label: '5 min' },
+  { value: 10, label: '10 min' },
+  { value: 30, label: '30 min' },
+];

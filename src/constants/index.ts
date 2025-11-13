@@ -9,3 +9,8 @@ export const PRIVATE_ROUTES = {
   PROFILE: '/profile',
   SETTINGS: '/settings',
 } as const;
+
+export const STORAGE_KEYS = {
+  AUTO_SAVE_ENABLED: 'AUTO_SAVE_ENABLED',
+  AUTO_SAVE_INTERVAL: 'AUTO_SAVE_INTERVAL',
+} as const;
