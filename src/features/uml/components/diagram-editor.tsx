@@ -38,7 +38,7 @@ const DiagramEditorInner = ({
   } = useDiagramEditor(initialData);
 
   return (
-    <div className="relative flex h-full w-full">
+    <div className="relative flex h-full w-full pt-16 md:pt-0">
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel
           className="min-w-30"
@@ -70,7 +70,7 @@ const DiagramEditorInner = ({
             <DownloadMenu diagramId={diagramId} />
             <Background />
             <Controls />
-            <MiniMap />
+            <MiniMap className="hidden md:block" />
           </ReactFlow>
         </ResizablePanel>
       </ResizablePanelGroup>
