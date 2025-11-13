@@ -25,8 +25,10 @@ function RootLayout({
   return (
     <html lang="en">
       <body className={`${interSans.variable} antialiased`}>
-        <AppProvider>{children}</AppProvider>
-        <Toaster />
+        <AppProvider>
+          {children}
+          <Toaster />
+        </AppProvider>
       </body>
     </html>
   );
