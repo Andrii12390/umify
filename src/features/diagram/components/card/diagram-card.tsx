@@ -15,7 +15,7 @@ export const DiagramCard = ({ id, name, lastModified }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="group relative flex h-full min-h-32 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border p-6 shadow-sm">
+    <div className="group bg-card relative flex h-full min-h-32 cursor-pointer flex-col justify-between overflow-hidden rounded-lg border p-6 shadow-sm">
       <h3 className="text-sm font-semibold">{name}</h3>
 
       <div className="bg-primary/10 absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">

@@ -1,4 +1,5 @@
 import { Download, FileText, Image, Save } from 'lucide-react';
+import { useEffect } from 'react';
 import { Panel, useReactFlow } from 'reactflow';
 import { toast } from 'sonner';
 
@@ -12,6 +13,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { STORAGE_KEYS } from '@/constants';
 import { saveDiagram } from '@/features/uml/actions';
 import { DEFAULT_OPTIONS, makeExportHandler } from '@/features/uml/utils';
 
@@ -48,6 +50,25 @@ export const DownloadMenu = ({
     filePrefix,
     { width, height, backgroundColor, pixelRatio },
   );
+
+  useEffect(() => {
+    const enabled = !!localStorage.getItem(STORAGE_KEYS.AUTO_SAVE_ENABLED);
+
+    if (!enabled) {
+      return;
+    }
+
+    const interval =
+      parseInt(localStorage.getItem(STORAGE_KEYS.AUTO_SAVE_INTERVAL) || '5', 10) || 5;
+
+    const intervalId = setInterval(() => {
+      saveDiagram(diagramId, JSON.stringify(toObject()));
+    }, interval * 60000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   const handleSave = () =>
     saveDiagram(diagramId, JSON.stringify(toObject())).then(res => {
