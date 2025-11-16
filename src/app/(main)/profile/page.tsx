@@ -1,5 +1,7 @@
+import { Profile } from '@/features/user/components/profile';
+
 function ProfilePage() {
-  return <p>Profile</p>;
+  return <Profile />;
 }
 
 export default ProfilePage;
