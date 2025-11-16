@@ -23,4 +23,20 @@ export const ProfileFormSchema = z.object({
     .or(z.string().optional()),
 });
 
+export const ChangePasswordFormSchema = z
+  .object({
+    password: z.string().trim().min(1, 'Password is required'),
+    newPassword: z
+      .string()
+      .trim()
+      .min(6, 'Password cannot be shorter than 6 characters')
+      .max(25, 'Password cannot be longer than 25 characters'),
+    confirmPassword: z.string().trim().min(1, 'Confirmation password is required'),
+  })
+  .refine(values => values.newPassword === values.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
+
 export type ProfileValues = z.infer<typeof ProfileFormSchema>;
+export type ChangePasswordValues = z.infer<typeof ChangePasswordFormSchema>;
