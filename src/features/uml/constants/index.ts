@@ -1,6 +1,6 @@
 import { MarkerType } from 'reactflow';
 
-import type { EdgeType } from '../types';
+import type { EdgeTerminatorSettings, EdgeType } from '../types';
 
 export const DIAGRAM_CLS = {
   nodeSelected: 'ring-2 ring-primary ring-offset-2',
@@ -34,31 +34,63 @@ export const SYSTEM_BOUNDARY = {
   defaultHeight: 300,
 };
 
+export const CLASS_NODE = {
+  minWidth: 180,
+  minHeight: 120,
+  defaultWidth: 240,
+  defaultHeight: 120,
+};
+
 export const EDGE_VARIANTS: Record<
   EdgeType,
   {
     dashed: boolean;
     autoLabel?: string;
-    markerEndType?: MarkerType;
-    markerStartType?: MarkerType;
+    markerType?: MarkerType;
+    terminators?: EdgeTerminatorSettings;
   }
 > = {
   association: { dashed: false },
   include: {
     dashed: true,
     autoLabel: 'includes',
-    markerEndType: MarkerType.Arrow,
-    markerStartType: MarkerType.Arrow,
+    markerType: MarkerType.Arrow,
   },
   extend: {
     dashed: true,
     autoLabel: 'extends',
-    markerEndType: MarkerType.Arrow,
-    markerStartType: MarkerType.Arrow,
+    markerType: MarkerType.Arrow,
   },
   generalization: {
     dashed: false,
-    markerEndType: MarkerType.Arrow,
-    markerStartType: MarkerType.Arrow,
+    markerType: MarkerType.Arrow,
+  },
+  inheritance: {
+    dashed: false,
+    terminators: {
+      end: 'triangleOutline',
+    },
+  },
+  realization: {
+    dashed: true,
+    terminators: {
+      end: 'triangleOutline',
+    },
+  },
+  dependency: {
+    dashed: true,
+    markerType: MarkerType.Arrow,
+  },
+  aggregation: {
+    dashed: false,
+    terminators: {
+      start: 'diamondOutline',
+    },
+  },
+  composition: {
+    dashed: false,
+    terminators: {
+      start: 'diamondFilled',
+    },
   },
 };

@@ -9,7 +9,11 @@ import {
 } from 'react';
 import { EdgeLabelRenderer, getBezierPath, type EdgeProps } from 'reactflow';
 
-import type { LabelEdgeData } from '@/features/uml/types';
+import type {
+  EdgeTerminatorSettings,
+  EdgeTerminatorShape,
+  LabelEdgeData,
+} from '@/features/uml/types';
 
 import { EDGE_COLORS } from '@/features/uml/constants';
 import { cn } from '@/lib/utils';
@@ -17,8 +21,105 @@ import { cn } from '@/lib/utils';
 export type LabelEdgeProps = EdgeProps<LabelEdgeData> & {
   dashed?: boolean;
   autoLabel?: string;
+  terminators?: EdgeTerminatorSettings;
 };
 
+const TerminatorIcon = ({ shape, color }: { shape: EdgeTerminatorShape; color: string }) => {
+  const commonProps = {
+    width: 12,
+    height: 12,
+    viewBox: '-12 -12 24 24',
+  };
+
+  switch (shape) {
+    case 'triangleOutline':
+      return (
+        <svg
+          {...commonProps}
+          fill="none"
+        >
+          <polygon
+            points="10,0 -8,-6 -8,6"
+            stroke={color}
+            strokeWidth={2}
+            fill={'#ffffff'}
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+
+    case 'triangleFilled':
+      return (
+        <svg {...commonProps}>
+          <polygon
+            points="10,0 -8,-6 -8,6"
+            fill={color}
+            stroke={color}
+            strokeWidth={2}
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+
+    case 'diamondOutline':
+      return (
+        <svg
+          {...commonProps}
+          fill="hsl(var(--background))"
+          stroke={color}
+          strokeWidth={2}
+          strokeLinejoin="round"
+        >
+          <polygon points="14,0 0,5 -10,0 0,-5" />
+        </svg>
+      );
+
+    case 'diamondFilled':
+      return (
+        <svg
+          {...commonProps}
+          fill={color}
+          stroke={color}
+          strokeWidth={1.5}
+          strokeLinejoin="round"
+        >
+          <polygon points="14,0 0,5 -10,0 0,-5" />
+        </svg>
+      );
+
+    default:
+      return null;
+  }
+};
+
+type TerminatorPosition = 'start' | 'end';
+
+type TerminatorOverlayProps = {
+  shape: EdgeTerminatorShape;
+  position: TerminatorPosition;
+  baseX: number;
+  baseY: number;
+  angle: number;
+  color: string;
+};
+const TerminatorOverlay = ({ shape, baseX, baseY, angle, color }: TerminatorOverlayProps) => {
+  const rotateDeg = (angle * 180) / Math.PI;
+
+  return (
+    <div
+      className="pointer-events-none absolute z-[1000]"
+      style={{
+        transformOrigin: 'center',
+        transform: `translate(-50%, -50%) translate(${baseX}px, ${baseY}px) rotate(${rotateDeg}deg)`,
+      }}
+    >
+      <TerminatorIcon
+        shape={shape}
+        color={color}
+      />
+    </div>
+  );
+};
 export const LabelEdgeBase = memo(function LabelEdgeBase(props: LabelEdgeProps) {
   const {
     id,
@@ -35,6 +136,7 @@ export const LabelEdgeBase = memo(function LabelEdgeBase(props: LabelEdgeProps) 
     markerStart,
     markerEnd,
     autoLabel,
+    terminators,
   } = props;
 
   const [isEditing, setIsEditing] = useState(false);
@@ -50,6 +152,7 @@ export const LabelEdgeBase = memo(function LabelEdgeBase(props: LabelEdgeProps) 
     targetY,
     targetPosition,
   });
+  const directionAngle = Math.atan2(targetY - sourceY, targetX - sourceX);
 
   useEffect(() => {
     if (!isEditing && labelValue !== currentLabel) {
@@ -128,6 +231,32 @@ export const LabelEdgeBase = memo(function LabelEdgeBase(props: LabelEdgeProps) 
         markerStart={markerStart}
         markerEnd={markerEnd}
       />
+      {(terminators?.start || terminators?.end) && (
+        <EdgeLabelRenderer>
+          <>
+            {terminators?.start && (
+              <TerminatorOverlay
+                shape={terminators.start}
+                position="start"
+                baseX={sourceX}
+                baseY={sourceY}
+                angle={directionAngle}
+                color={strokeColor}
+              />
+            )}
+            {terminators?.end && (
+              <TerminatorOverlay
+                shape={terminators.end}
+                position="end"
+                baseX={targetX}
+                baseY={targetY}
+                angle={directionAngle}
+                color={strokeColor}
+              />
+            )}
+          </>
+        </EdgeLabelRenderer>
+      )}
       <EdgeLabelRenderer>
         <div
           className="nodrag nopan pointer-events-auto absolute z-1000"

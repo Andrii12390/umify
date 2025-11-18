@@ -1,6 +1,6 @@
 import type { MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent } from 'react';
 
-import { find, filter, map } from 'lodash-es';
+import { filter, map } from 'lodash-es';
 import { useCallback, useEffect, useState } from 'react';
 import {
   addEdge,
@@ -13,15 +13,12 @@ import {
   MarkerType,
   type OnConnectStartParams,
 } from 'reactflow';
-import { toast } from 'sonner';
 
 import type { DiagramData } from '@/features/uml/schemas';
 
-import { isValidConnection } from '@/features/uml/utils/is-valid-connection';
-
 import type { EdgeType, LabelEdgeData } from '../types';
 
-import { EDGE_COLORS, EDGE_VARIANTS, SYSTEM_BOUNDARY } from '../constants';
+import { CLASS_NODE, EDGE_COLORS, EDGE_VARIANTS, SYSTEM_BOUNDARY } from '../constants';
 import { createCenteredNodePosition, createNodeWithData } from '../utils/create-node';
 import { withUpdatedNodesData } from '../utils/node-data';
 
@@ -42,6 +39,7 @@ type UseDiagramEditorResult = {
   addUseCaseNode: () => void;
   addNoteNode: () => void;
   addSystemBoundaryNode: () => void;
+  addClassNode: () => void;
 };
 
 export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEditorResult => {
@@ -115,14 +113,46 @@ export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEdi
     [setNodes],
   );
 
+  const onChangeClassName = useCallback(
+    (id: string, className: string) => {
+      setNodes(nds => withUpdatedNodesData(nds, id, data => ({ ...data, className })));
+    },
+    [setNodes],
+  );
+
+  const onChangeClassAttributes = useCallback(
+    (id: string, attributes: string) => {
+      setNodes(nds => withUpdatedNodesData(nds, id, data => ({ ...data, attributes })));
+    },
+    [setNodes],
+  );
+
+  const onChangeClassMethods = useCallback(
+    (id: string, methods: string) => {
+      setNodes(nds => withUpdatedNodesData(nds, id, data => ({ ...data, methods })));
+    },
+    [setNodes],
+  );
+
   const makeData = useCallback(
     () => ({
       onChangeLabel,
       onChangeText,
       onChangeTitle,
       onEdgeLabelChange,
+      onChangeClassName,
+      onChangeClassAttributes,
+      onChangeClassMethods,
     }),
-    [onChangeLabel, onChangeText, onChangeTitle, onEdgeLabelChange],
+    [
+      onChangeLabel,
+      onChangeText,
+      onChangeTitle,
+      onEdgeLabelChange,
+      onChangeClassName,
+      onChangeClassAttributes,
+      onChangeClassMethods,
+    ],
   );
 
   const onConnectStart = useCallback(
@@ -136,40 +166,28 @@ export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEdi
     setConnectStart(null);
   }, []);
 
-  const getMarkerForType = (type: EdgeType) => {
-    const variant = EDGE_VARIANTS[type];
-    if (!variant.markerEndType) return undefined;
-
-    return {
-      type: variant.markerEndType,
-      color: EDGE_COLORS.default,
-      ...(variant.markerEndType === MarkerType.Arrow ? { strokeWidth: 1 } : {}),
-    };
-  };
+  const makeMarker = (type: MarkerType) => ({
+    type,
+    color: EDGE_COLORS.default,
+    ...(type === MarkerType.Arrow ? { strokeWidth: 1 } : {}),
+  });
 
   const onConnect = useCallback(
     (params: Connection) => {
-      const { source, target } = params;
+      const { source, target, sourceHandle, targetHandle } = params;
       if (!source || !target) return;
 
-      const sourceNode = find(nodes, { id: source }) || null;
-      const targetNode = find(nodes, { id: target }) || null;
-
-      const validation = isValidConnection(sourceNode, targetNode, selectedEdgeType);
-      if (!validation.valid) {
-        toast.error(validation.message);
-        return;
-      }
-
       const variant = EDGE_VARIANTS[selectedEdgeType];
-      const marker = getMarkerForType(selectedEdgeType);
+      const markerType = variant.markerType;
+      const marker = markerType ? makeMarker(markerType) : undefined;
 
       const newEdge: Edge<LabelEdgeData> = {
         id: `edge-${crypto.randomUUID()}`,
         type: selectedEdgeType,
         source,
         target,
-        label: undefined,
+        sourceHandle,
+        targetHandle,
         data: { onEdgeLabelChange, autoLabel: variant.autoLabel, labelDeleted: false },
         style: {
           stroke: EDGE_COLORS.default,
@@ -182,7 +200,7 @@ export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEdi
 
       setEdges(eds => addEdge(newEdge, eds));
     },
-    [nodes, selectedEdgeType, connectStart, setEdges, onEdgeLabelChange],
+    [selectedEdgeType, connectStart, setEdges, onEdgeLabelChange],
   );
 
   const addNode = useCallback(
@@ -213,6 +231,20 @@ export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEdi
       width,
       height,
       style: { width, height, zIndex: -1 },
+    });
+  }, [addNode]);
+
+  const addClassNode = useCallback(() => {
+    const { defaultWidth: width, defaultHeight: height, minWidth, minHeight } = CLASS_NODE;
+    addNode('class', 'class', {
+      width,
+      height,
+      style: {
+        width,
+        height,
+        minWidth,
+        minHeight,
+      },
     });
   }, [addNode]);
 
@@ -257,5 +289,6 @@ export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEdi
     addUseCaseNode,
     addNoteNode,
     addSystemBoundaryNode,
+    addClassNode,
   };
 };

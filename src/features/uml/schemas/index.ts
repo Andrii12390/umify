@@ -14,15 +14,21 @@ const nodeDataSchema = z.object({
   label: z.string().optional(),
   text: z.string().optional(),
   title: z.string().optional(),
+  className: z.string().optional(),
+  attributes: z.string().optional(),
+  methods: z.string().optional(),
   onChangeLabel: z.function().optional(),
   onChangeText: z.function().optional(),
   onChangeTitle: z.function().optional(),
+  onChangeClassName: z.function().optional(),
+  onChangeClassAttributes: z.function().optional(),
+  onChangeClassMethods: z.function().optional(),
   onEdgeLabelChange: z.function().optional(),
 });
 
 const nodeSchema = z.object({
   id: z.string(),
-  type: z.enum(['actor', 'useCase', 'note', 'systemBoundary']),
+  type: z.enum(['actor', 'useCase', 'note', 'systemBoundary', 'class']),
   position: positionSchema,
   data: nodeDataSchema.passthrough(),
   width: z.number().optional(),
