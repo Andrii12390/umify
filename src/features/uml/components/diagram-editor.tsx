@@ -35,6 +35,7 @@ const DiagramEditorInner = ({
     addUseCaseNode,
     addNoteNode,
     addSystemBoundaryNode,
+    addClassNode,
   } = useDiagramEditor(initialData);
 
   return (
@@ -51,6 +52,7 @@ const DiagramEditorInner = ({
             onAddUseCase={addUseCaseNode}
             onAddNote={addNoteNode}
             onAddBoundary={addSystemBoundaryNode}
+            onAddClassNode={addClassNode}
           />
         </ResizablePanel>
         <ResizableHandle />
@@ -58,7 +60,6 @@ const DiagramEditorInner = ({
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            connectionRadius={Infinity}
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
             onNodesChange={onNodesChange}
@@ -66,6 +67,7 @@ const DiagramEditorInner = ({
             onConnect={onConnect}
             onConnectStart={onConnectStart}
             onConnectEnd={onConnectEnd}
+            connectionRadius={20}
           >
             <DownloadMenu diagramId={diagramId} />
             <Background />

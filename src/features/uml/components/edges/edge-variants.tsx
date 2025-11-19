@@ -15,6 +15,7 @@ const createEdgeComponent = (type: keyof typeof EDGE_VARIANTS) => {
       {...props}
       dashed={variant.dashed}
       autoLabel={variant.autoLabel}
+      terminators={variant.terminators}
     />
   );
   Component.displayName = `${type.charAt(0).toUpperCase() + type.slice(1)}Edge`;
@@ -25,3 +26,8 @@ export const AssociationEdge = createEdgeComponent('association');
 export const IncludeEdge = createEdgeComponent('include');
 export const ExtendEdge = createEdgeComponent('extend');
 export const GeneralizationEdge = createEdgeComponent('generalization');
+export const InheritanceEdge = createEdgeComponent('inheritance');
+export const RealizationEdge = createEdgeComponent('realization');
+export const DependencyEdge = createEdgeComponent('dependency');
+export const AggregationEdge = createEdgeComponent('aggregation');
+export const CompositionEdge = createEdgeComponent('composition');

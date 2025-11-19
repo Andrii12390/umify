@@ -18,6 +18,7 @@ type Props = {
   onAddUseCase: () => void;
   onAddNote: () => void;
   onAddBoundary: () => void;
+  onAddClassNode: () => void;
 };
 
 export const Toolbar = ({
@@ -27,6 +28,7 @@ export const Toolbar = ({
   onAddUseCase,
   onAddNote,
   onAddBoundary,
+  onAddClassNode,
 }: Props) => {
   const componentGroups = [
     {
@@ -39,7 +41,14 @@ export const Toolbar = ({
       ],
     },
     {
-      title: 'Arrows',
+      title: 'Class Diagram',
+      items: [
+        { iconSrc: '/uml/class.svg', label: 'Class', onClick: onAddClassNode },
+        { iconSrc: '/uml/text.svg', label: 'Text', onClick: onAddNote },
+      ],
+    },
+    {
+      title: 'Relationships',
       items: [
         {
           iconSrc: '/arrows/association.svg',
@@ -65,6 +74,36 @@ export const Toolbar = ({
           onClick: () => onEdgeTypeChange('generalization'),
           edgeType: 'generalization',
         },
+        {
+          iconSrc: '/arrows/inheritance.svg',
+          label: 'Inheritance',
+          onClick: () => onEdgeTypeChange('inheritance'),
+          edgeType: 'inheritance',
+        },
+        {
+          iconSrc: '/arrows/realization.svg',
+          label: 'Realization',
+          onClick: () => onEdgeTypeChange('realization'),
+          edgeType: 'realization',
+        },
+        {
+          iconSrc: '/arrows/dependency.svg',
+          label: 'Dependency',
+          onClick: () => onEdgeTypeChange('dependency'),
+          edgeType: 'dependency',
+        },
+        {
+          iconSrc: '/arrows/aggregation.svg',
+          label: 'Aggregation',
+          onClick: () => onEdgeTypeChange('aggregation'),
+          edgeType: 'aggregation',
+        },
+        {
+          iconSrc: '/arrows/composition.svg',
+          label: 'Composition',
+          onClick: () => onEdgeTypeChange('composition'),
+          edgeType: 'composition',
+        },
       ],
     },
   ];
@@ -73,7 +112,7 @@ export const Toolbar = ({
     <aside className="bg-card h-full p-2">
       <Accordion
         type="multiple"
-        defaultValue={['Use Case', 'Arrows']}
+        defaultValue={['Use Case', 'Class Diagram', 'Relationships']}
         className="w-full space-y-2"
       >
         {componentGroups.map(({ title, items }) => (

@@ -111,6 +111,17 @@
   --bg-diagram: #000000;
 }
 
+
+.light .react-flow__pane,
+.light .react-flow__node {
+  cursor: auto;
+}
+
+.light .react-flow__pane.dragging,
+.light .react-flow__node.dragging {
+  cursor: move !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
