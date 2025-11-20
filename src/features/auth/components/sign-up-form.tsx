@@ -11,6 +11,7 @@ import type { SignUpValues } from '@/features/auth/schemas';
 
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import { FormError } from '@/components/ui/form-error';
 import { TextInputField } from '@/components/ui/text-input-field';
 import { PUBLIC_ROUTES } from '@/constants';
 import { registerUser } from '@/features/auth/actions';
@@ -19,36 +20,39 @@ import { PROVIDERS } from '@/features/auth/constants';
 import { SignUpFormSchema } from '@/features/auth/schemas';
 import { authService } from '@/features/auth/services';
 
+const defaultValues = {
+  email: '',
+  username: '',
+  password: '',
+  confirmPassword: '',
+} satisfies SignUpValues;
+
 export const SignUpForm = () => {
   const router = useRouter();
 
   const form = useForm<SignUpValues>({
     resolver: zodResolver(SignUpFormSchema),
     mode: 'onChange',
-    defaultValues: {
-      email: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
-    },
+    defaultValues,
   });
 
+  const { isSubmitting, errors } = form.formState;
+
   const onSubmit: SubmitHandler<SignUpValues> = async values => {
-    try {
-      const res = await registerUser(values);
-      if (res) {
-        const signInRes = await signIn(PROVIDERS.CREDENTIALS, {
-          ...values,
-          redirect: false,
-        });
-        if (signInRes?.ok) {
-          await authService.sendCode();
-          router.push(PUBLIC_ROUTES.VERIFICATION);
-        }
+    const res = await registerUser(values);
+    if (res.success) {
+      const signInRes = await signIn(PROVIDERS.CREDENTIALS, {
+        ...values,
+        redirect: false,
+      });
+
+      if (signInRes?.ok) {
+        await authService.sendCode();
+        router.push(PUBLIC_ROUTES.VERIFICATION);
       }
-    } catch (error) {
+    } else {
       form.setError('root', {
-        message: error instanceof Error ? error.message : 'Something went wrong',
+        message: res.error,
       });
     }
   };
@@ -100,18 +104,14 @@ export const SignUpForm = () => {
         >
           Already have an account?
         </Link>
-        {form.formState.errors.root?.message && (
-          <p className="text-destructive bg-destructive/10 rounded-md px-3 py-2">
-            {form.formState.errors.root?.message}
-          </p>
-        )}
+        <FormError message={errors.root?.message} />
         <SocialOptions />
         <Button
-          disabled={form.formState.isSubmitting}
+          disabled={isSubmitting}
           className="text-md mx-auto mt-4 w-1/2 text-center"
           data-testid="signUp-submit"
         >
-          {form.formState.isSubmitting && <LoaderCircle className="animate-spin" />}
+          {isSubmitting && <LoaderCircle className="animate-spin" />}
           Sign Up
         </Button>
       </form>
