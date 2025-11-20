@@ -40,6 +40,7 @@ type UseDiagramEditorResult = {
   addNoteNode: () => void;
   addSystemBoundaryNode: () => void;
   addClassNode: () => void;
+  addPackageNode: () => void;
 };
 
 export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEditorResult => {
@@ -248,6 +249,20 @@ export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEdi
     });
   }, [addNode]);
 
+  const addPackageNode = useCallback(() => {
+    const { defaultWidth: width, defaultHeight: height, minWidth, minHeight } = CLASS_NODE;
+    addNode('package', 'package', {
+      width,
+      height,
+      style: {
+        width,
+        height,
+        minWidth,
+        minHeight,
+      },
+    });
+  }, [addNode]);
+
   const deleteSelected = useCallback(() => {
     const selectedNodes = filter(nodes, n => n.selected);
     const selectedEdges = filter(edges, e => e.selected);
@@ -290,5 +305,6 @@ export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEdi
     addNoteNode,
     addSystemBoundaryNode,
     addClassNode,
+    addPackageNode,
   };
 };

@@ -40,6 +40,11 @@ export type ClassNodeData = {
   onChangeClassMethods?: (id: string, methods: string) => void;
 };
 
+export type PackageNodeData = {
+  label?: string;
+  onChangeLabel?: (id: string, label: string) => void;
+};
+
 export type LabelEdgeData = {
   onEdgeLabelChange?: (id: string, label: string | undefined) => void;
   autoLabel?: string;

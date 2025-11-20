@@ -36,6 +36,7 @@ const DiagramEditorInner = ({
     addNoteNode,
     addSystemBoundaryNode,
     addClassNode,
+    addPackageNode,
   } = useDiagramEditor(initialData);
 
   return (
@@ -53,6 +54,7 @@ const DiagramEditorInner = ({
             onAddNote={addNoteNode}
             onAddBoundary={addSystemBoundaryNode}
             onAddClassNode={addClassNode}
+            onAddPackage={addPackageNode}
           />
         </ResizablePanel>
         <ResizableHandle />

@@ -9,6 +9,7 @@ import {
   InheritanceEdge,
   RealizationEdge,
 } from '@/features/uml/components/edges/edge-variants';
+import { PackageNode } from '@/features/uml/components/nodes';
 import { ActorNode } from '@/features/uml/components/nodes/actor-node';
 import { ClassNode } from '@/features/uml/components/nodes/class-node';
 import { NoteNode } from '@/features/uml/components/nodes/note-node';
@@ -21,6 +22,7 @@ export const nodeTypes = {
   note: NoteNode,
   systemBoundary: SystemBoundaryNode,
   class: ClassNode,
+  package: PackageNode,
 };
 
 export const edgeTypes = {
