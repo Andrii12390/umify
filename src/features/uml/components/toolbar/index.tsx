@@ -19,6 +19,7 @@ type Props = {
   onAddNote: () => void;
   onAddBoundary: () => void;
   onAddClassNode: () => void;
+  onAddPackage: () => void;
 };
 
 export const Toolbar = ({
@@ -29,6 +30,7 @@ export const Toolbar = ({
   onAddNote,
   onAddBoundary,
   onAddClassNode,
+  onAddPackage,
 }: Props) => {
   const componentGroups = [
     {
@@ -44,6 +46,13 @@ export const Toolbar = ({
       title: 'Class Diagram',
       items: [
         { iconSrc: '/uml/class.svg', label: 'Class', onClick: onAddClassNode },
+        { iconSrc: '/uml/text.svg', label: 'Text', onClick: onAddNote },
+      ],
+    },
+    {
+      title: 'Package Diagram',
+      items: [
+        { iconSrc: '/uml/package.svg', label: 'Package', onClick: onAddPackage },
         { iconSrc: '/uml/text.svg', label: 'Text', onClick: onAddNote },
       ],
     },
