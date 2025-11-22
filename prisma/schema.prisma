@@ -43,7 +43,7 @@ model Diagram {
 
   name String
 
-  User      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   data      Json     @default("{}")
   createdAt DateTime @default(now()) @map("created_at")
