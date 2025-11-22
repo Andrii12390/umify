@@ -242,7 +242,7 @@ function Sidebar({
 }
 
 function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, open } = useSidebar();
 
   return (
     <Button
@@ -250,7 +250,11 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
-      className={cn('size-7', className)}
+      className={cn(
+        'absolute right-2 size-7',
+        !open && 'bg-secondary right-[7px] hidden p-4 group-hover:flex',
+        className,
+      )}
       onClick={event => {
         onClick?.(event);
         toggleSidebar();

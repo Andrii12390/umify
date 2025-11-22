@@ -12,11 +12,17 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   useSidebar,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { useMenu } from '@/hooks';
 import { cn } from '@/lib/utils';
 
-export const AppSidebar = () => {
+interface Props {
+  username?: string;
+  email?: string;
+}
+
+export const AppSidebar = ({ username, email }: Props) => {
   const { state } = useSidebar();
   const isCollapsed = state === 'collapsed';
   const menuItems = useMenu();
@@ -29,7 +35,7 @@ export const AppSidebar = () => {
       <SidebarHeader
         className={cn('h-14 justify-center border-b transition-all', !isCollapsed && 'px-4')}
       >
-        <div className="flex items-center gap-3">
+        <div className="group flex items-center gap-3">
           <div className="bg-primary flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white">
             <span className="text-xl font-bold">U</span>
           </div>
@@ -39,6 +45,7 @@ export const AppSidebar = () => {
               <span className="text-muted-foreground truncate text-xs">Free UML-tool</span>
             </div>
           )}
+          <SidebarTrigger className="ml-2 cursor-pointer" />
         </div>
       </SidebarHeader>
 
@@ -71,23 +78,23 @@ export const AppSidebar = () => {
         </SidebarMenu>
       </SidebarContent>
 
-      <SidebarFooter
-        className={cn('h-14 justify-center border-t transition-all', !isCollapsed && 'px-4')}
-      >
-        <div className="flex items-center gap-3">
-          <div className="bg-primary flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full">
-            <span className="text-lg font-bold text-white">S</span>
-          </div>
-          {!isCollapsed && (
-            <div className="flex flex-col overflow-hidden">
-              <span className="truncate font-medium">andrii</span>
-              <span className="text-muted-foreground truncate text-xs">
-                pasiura.andrii.dev@gmail.com
-              </span>
+      {username && email && (
+        <SidebarFooter
+          className={cn('h-14 justify-center border-t transition-all', !isCollapsed && 'px-4')}
+        >
+          <div className="flex items-center gap-3">
+            <div className="bg-primary flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full">
+              <span className="text-lg font-bold text-white">{username[0].toUpperCase()}</span>
             </div>
-          )}
-        </div>
-      </SidebarFooter>
+            {!isCollapsed && (
+              <div className="flex flex-col overflow-hidden">
+                <span className="truncate font-medium">{username}</span>
+                <span className="text-muted-foreground truncate text-xs">{email}</span>
+              </div>
+            )}
+          </div>
+        </SidebarFooter>
+      )}
     </Sidebar>
   );
 };
