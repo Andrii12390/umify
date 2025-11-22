@@ -33,3 +33,5 @@ export const useMenu = () => {
     [pathname],
   );
 };
+
+export type MenuList = ReturnType<typeof useMenu>;
