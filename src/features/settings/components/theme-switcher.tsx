@@ -6,7 +6,7 @@ import { ThemeCard } from '@/features/settings/components/theme-card';
 import { THEME_OPTIONS } from '@/features/settings/constants';
 
 export const ThemeSwitcher = () => {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <div className="p-4 lg:p-6">
@@ -17,14 +17,12 @@ export const ThemeSwitcher = () => {
         </p>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
-        {THEME_OPTIONS.map(o => (
+        {THEME_OPTIONS.map(option => (
           <ThemeCard
-            key={o.value}
-            value={o.value}
-            text={o.text}
-            onClick={() => setTheme(o.value)}
-            isActive={o.value === theme}
-            icon={o.icon}
+            key={option.value}
+            onClick={() => setTheme(option.value)}
+            isActive={option.value === resolvedTheme}
+            {...option}
           />
         ))}
       </div>
