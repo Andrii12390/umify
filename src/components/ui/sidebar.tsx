@@ -252,7 +252,7 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
       size="icon"
       className={cn(
         'absolute right-2 size-7',
-        !open && 'bg-secondary right-[7px] hidden p-4 group-hover:flex',
+        !open && 'bg-secondary hover:bg-secondary! right-[7px] hidden p-4 group-hover/header:flex',
         className,
       )}
       onClick={event => {

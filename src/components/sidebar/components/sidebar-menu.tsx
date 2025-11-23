@@ -41,11 +41,12 @@ export const SidebarMenu = ({ items, isCollapsed }: Props) => (
                 </Link>
               </SidebarMenuButton>
             </TooltipTrigger>
-            {isCollapsed && (
-              <TooltipContent side="right">
-                <p>{label}</p>
-              </TooltipContent>
-            )}
+            <TooltipContent
+              side="right"
+              className={cn(!isCollapsed && 'hidden')}
+            >
+              <p>{label}</p>
+            </TooltipContent>
           </Tooltip>
         </SidebarMenuItem>
       );

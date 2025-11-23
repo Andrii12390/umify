@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const SidebarLogo = ({ isCollapsed }: Props) => (
-  <div className="group flex items-center gap-3">
+  <div className="group/header flex items-center gap-3">
     <div className="bg-primary flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white">
       <span className="text-xl font-bold">U</span>
     </div>
