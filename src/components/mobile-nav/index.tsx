@@ -6,21 +6,21 @@ import { useMenu } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 export const MobileNav = () => {
-  const menuList = useMenu();
+  const menu = useMenu();
 
   return (
     <nav className="border-t md:hidden">
       <ul className="grid grid-cols-3">
-        {menuList.map(item => (
+        {menu.map(({ href, label, icon: Icon, isActive }) => (
           <li
-            key={item.label}
+            key={label}
             className={cn(
-              'text-muted-foreground flex h-16 flex-col items-center justify-center',
-              item.isActive && 'text-primary',
+              'text-muted-foreground flex h-18 flex-col items-center justify-center',
+              isActive && 'text-primary',
             )}
           >
-            <item.icon />
-            <Link href={item.href}>{item.label}</Link>
+            <Icon />
+            <Link href={href}>{label}</Link>
           </li>
         ))}
       </ul>
