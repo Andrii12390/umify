@@ -34,81 +34,85 @@ export const Toolbar = ({
 }: Props) => {
   const componentGroups = [
     {
-      title: 'Use Case',
+      title: 'Use Case Diagram',
       items: [
-        { iconSrc: '/uml/actor.svg', label: 'Actor', onClick: onAddActor },
-        { iconSrc: '/uml/use-case.svg', label: 'Use Case', onClick: onAddUseCase },
-        { iconSrc: '/uml/system-boundary.svg', label: 'System Boundary', onClick: onAddBoundary },
-        { iconSrc: '/uml/text.svg', label: 'Text', onClick: onAddNote },
+        { iconSrc: '/uml/nodes/actor.svg', label: 'Actor', onClick: onAddActor },
+        { iconSrc: '/uml/nodes/use-case.svg', label: 'Use Case', onClick: onAddUseCase },
+        {
+          iconSrc: '/uml/nodes/system-boundary.svg',
+          label: 'System Boundary',
+          onClick: onAddBoundary,
+        },
+        { iconSrc: '/uml/nodes/text.svg', label: 'Text', onClick: onAddNote },
       ],
     },
     {
       title: 'Class Diagram',
       items: [
-        { iconSrc: '/uml/class.svg', label: 'Class', onClick: onAddClassNode },
-        { iconSrc: '/uml/text.svg', label: 'Text', onClick: onAddNote },
+        { iconSrc: '/uml/nodes/class.svg', label: 'Class', onClick: onAddClassNode },
+        { iconSrc: '/uml/nodes/text.svg', label: 'Text', onClick: onAddNote },
       ],
     },
     {
       title: 'Package Diagram',
       items: [
-        { iconSrc: '/uml/package.svg', label: 'Package', onClick: onAddPackage },
-        { iconSrc: '/uml/text.svg', label: 'Text', onClick: onAddNote },
+        { iconSrc: '/uml/nodes/package.svg', label: 'Package', onClick: onAddPackage },
+        { iconSrc: '/uml/nodes/text.svg', label: 'Text', onClick: onAddNote },
       ],
     },
     {
       title: 'Relationships',
       items: [
         {
-          iconSrc: '/arrows/association.svg',
+          iconSrc: '/uml/relations/association.svg',
           label: 'Association',
           onClick: () => onEdgeTypeChange('association'),
           edgeType: 'association',
         },
         {
-          iconSrc: '/arrows/include.svg',
+          iconSrc: '/uml/relations/include.svg',
           label: 'Include',
           onClick: () => onEdgeTypeChange('include'),
           edgeType: 'include',
         },
         {
-          iconSrc: '/arrows/extend.svg',
+          iconSrc: '/uml/relations/extend.svg',
           label: 'Extend',
           onClick: () => onEdgeTypeChange('extend'),
           edgeType: 'extend',
         },
         {
-          iconSrc: '/arrows/generalization.svg',
+          iconSrc: '/uml/relations/generalization.svg',
           label: 'Generalization',
           onClick: () => onEdgeTypeChange('generalization'),
           edgeType: 'generalization',
         },
         {
-          iconSrc: '/arrows/inheritance.svg',
+          iconSrc: '/uml/relations/inheritance.svg',
           label: 'Inheritance',
           onClick: () => onEdgeTypeChange('inheritance'),
           edgeType: 'inheritance',
         },
         {
-          iconSrc: '/arrows/realization.svg',
+          iconSrc: '/uml/relations/realization.svg',
           label: 'Realization',
           onClick: () => onEdgeTypeChange('realization'),
           edgeType: 'realization',
         },
         {
-          iconSrc: '/arrows/dependency.svg',
+          iconSrc: '/uml/relations/dependency.svg',
           label: 'Dependency',
           onClick: () => onEdgeTypeChange('dependency'),
           edgeType: 'dependency',
         },
         {
-          iconSrc: '/arrows/aggregation.svg',
+          iconSrc: '/uml/relations/aggregation.svg',
           label: 'Aggregation',
           onClick: () => onEdgeTypeChange('aggregation'),
           edgeType: 'aggregation',
         },
         {
-          iconSrc: '/arrows/composition.svg',
+          iconSrc: '/uml/relations/composition.svg',
           label: 'Composition',
           onClick: () => onEdgeTypeChange('composition'),
           edgeType: 'composition',
@@ -121,7 +125,7 @@ export const Toolbar = ({
     <aside className="bg-card h-full p-2">
       <Accordion
         type="multiple"
-        defaultValue={['Use Case', 'Class Diagram', 'Relationships']}
+        defaultValue={['Use Case Diagram', 'Class Diagram', 'Package Diagram', 'Relationships']}
         className="w-full space-y-2"
       >
         {componentGroups.map(({ title, items }) => (
@@ -158,7 +162,7 @@ export const Toolbar = ({
                         width={28}
                         height={28}
                         alt={label}
-                        className="size-7"
+                        className="size-7 stroke-red-500! dark:invert"
                       />
                     </Button>
                   );

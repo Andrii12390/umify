@@ -11,20 +11,24 @@ interface Props {
 }
 
 export const ThemeCard = ({ value, text, onClick, isActive, icon: Icon }: Props) => {
+  const cardClassName = cn(
+    'bg-card group flex cursor-pointer flex-col items-center justify-center rounded-md border px-6 py-8 shadow-md transition-colors',
+    isActive ? 'border-primary/50 bg-primary/15' : 'hover:bg-primary/15 hover:border-primary/50',
+  );
+
+  const iconWrapperClassName = cn(
+    'bg-secondary text-secondary-foreground group-hover:bg-primary/30 grid size-12 place-items-center rounded-full transition-colors',
+    isActive && 'bg-primary/30',
+  );
+
   return (
     <div
       onClick={onClick}
-      className={cn(
-        'bg-card flex cursor-pointer flex-col items-center justify-center rounded-md border px-6 py-8 shadow-md transition-colors',
-        isActive
-          ? 'border-primary/50 bg-primary/15'
-          : 'hover:bg-primary/15 hover:border-primary/50',
-      )}
+      className={cardClassName}
     >
-      <div className="bg-primary/30 text-secondary-foreground grid size-12 place-items-center rounded-full">
+      <div className={iconWrapperClassName}>
         <Icon />
       </div>
-
       <span className="mt-2 text-lg font-medium capitalize">{value}</span>
       <p className="text-secondary-foreground text-center text-xs">{text}</p>
     </div>

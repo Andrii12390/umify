@@ -94,18 +94,16 @@ export const authOptions: NextAuthOptions = {
           where: {
             id: token.id,
           },
+          omit: {
+            password: true,
+          },
         });
 
         if (!user) {
           return session;
         }
 
-        session.user.id = user.id;
-        session.user.email = user.email;
-        session.user.username = user.username;
-        session.user.imageUrl = user.imageUrl;
-        session.user.avatarColor = user.avatarColor;
-        session.user.isVerified = user.isVerified;
+        session.user = { ...user };
       }
 
       return session;

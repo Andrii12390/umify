@@ -22,7 +22,7 @@ import { DiagramFormSchema } from '../../schemas';
 interface Props extends PropsWithChildren {
   title: string;
   submitLabel: string;
-  defaults?: Partial<{ name: string }>;
+  defaults?: { name: string };
   onSubmit: (values: DiagramFormValues, api: { reset: () => void }) => void | Promise<void>;
   disabled?: boolean;
 }

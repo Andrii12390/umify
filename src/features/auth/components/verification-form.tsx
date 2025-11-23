@@ -5,6 +5,7 @@ import { times } from 'lodash-es';
 import { LoaderCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { FormError } from '@/components/ui/form-error';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { useVerification } from '@/features/auth/hooks';
 
@@ -29,7 +30,7 @@ export const VerificationForm = () => {
         We have sent a verification code to <br /> your email address
       </p>
       <InputOTP
-        maxLength={6}
+        maxLength={OTP_LENGTH}
         pattern={REGEXP_ONLY_DIGITS}
         autoFocus
         onChange={e => setCode(e)}
@@ -46,10 +47,7 @@ export const VerificationForm = () => {
           ))}
         </InputOTPGroup>
       </InputOTP>
-
-      {error && (
-        <p className="text-destructive bg-destructive/10 w-full rounded-md px-3 py-2">{error}</p>
-      )}
+      <FormError message={error} />
       <Button
         size="lg"
         className="w-2/3 text-lg tracking-wide"

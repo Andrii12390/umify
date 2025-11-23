@@ -40,45 +40,48 @@ const DiagramEditorInner = ({
   } = useDiagramEditor(initialData);
 
   return (
-    <div className="relative flex h-full w-full pt-16 md:pt-0">
-      <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel
-          className="min-w-30"
-          defaultSize={20}
+    <ResizablePanelGroup
+      direction="horizontal"
+      className="h-full w-full"
+    >
+      <ResizablePanel
+        className="min-w-30 overflow-y-auto"
+        defaultSize={20}
+      >
+        <Toolbar
+          selectedEdgeType={selectedEdgeType}
+          onEdgeTypeChange={setSelectedEdgeType}
+          onAddActor={addActorNode}
+          onAddUseCase={addUseCaseNode}
+          onAddNote={addNoteNode}
+          onAddBoundary={addSystemBoundaryNode}
+          onAddClassNode={addClassNode}
+          onAddPackage={addPackageNode}
+        />
+      </ResizablePanel>
+
+      <ResizableHandle />
+      <ResizablePanel className="relative">
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onConnectStart={onConnectStart}
+          onConnectEnd={onConnectEnd}
+          connectionRadius={20}
+          fitView
         >
-          <Toolbar
-            selectedEdgeType={selectedEdgeType}
-            onEdgeTypeChange={setSelectedEdgeType}
-            onAddActor={addActorNode}
-            onAddUseCase={addUseCaseNode}
-            onAddNote={addNoteNode}
-            onAddBoundary={addSystemBoundaryNode}
-            onAddClassNode={addClassNode}
-            onAddPackage={addPackageNode}
-          />
-        </ResizablePanel>
-        <ResizableHandle />
-        <ResizablePanel>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            nodeTypes={nodeTypes}
-            edgeTypes={edgeTypes}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            onConnectStart={onConnectStart}
-            onConnectEnd={onConnectEnd}
-            connectionRadius={20}
-          >
-            <DownloadMenu diagramId={diagramId} />
-            <Background />
-            <Controls />
-            <MiniMap className="hidden md:block" />
-          </ReactFlow>
-        </ResizablePanel>
-      </ResizablePanelGroup>
-    </div>
+          <DownloadMenu diagramId={diagramId} />
+          <Background />
+          <Controls />
+          <MiniMap className="hidden md:block" />
+        </ReactFlow>
+      </ResizablePanel>
+    </ResizablePanelGroup>
   );
 };
 

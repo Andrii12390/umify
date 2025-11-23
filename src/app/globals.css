@@ -44,11 +44,11 @@
 :root {
   --radius: 0.65rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.3211 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
+  --card-foreground: oklch(0.3211 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
+  --popover-foreground: oklch(0.3211 0 0);
   --primary: oklch(0.648 0.2 131.684);
   --primary-foreground: oklch(0.986 0.031 120.757);
   --secondary: oklch(0.967 0.001 286.375);
@@ -67,7 +67,7 @@
   --chart-4: oklch(0.527 0.154 150.069);
   --chart-5: oklch(0.448 0.119 151.328);
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-foreground: oklch(0.3211 0 0);
   --sidebar-primary: oklch(0.648 0.2 131.684);
   --sidebar-primary-foreground: oklch(0.986 0.031 120.757);
   --sidebar-accent: oklch(0.967 0.001 286.375);
@@ -108,9 +108,8 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.405 0.101 131.063);
-  --bg-diagram: #000000;
+  --bg-diagram: #333333;
 }
-
 
 .light .react-flow__pane,
 .light .react-flow__node {
@@ -120,6 +119,44 @@
 .light .react-flow__pane.dragging,
 .light .react-flow__node.dragging {
   cursor: move !important;
+}
+
+.dark .react-flow__controls-button {
+  background-color: var(--card);
+  stroke: currentColor;
+  fill: currentColor;
+  border-color: var(--card);
+}
+
+.dark .react-flow__controls-button:hover {
+  background-color: var(--card);
+}
+
+.dark .react-flow__minimap {
+  background-color: var(--background);
+}
+
+.dark .react-flow__minimap-node {
+  fill: var(--card);
+}
+
+.bouncing-dot {
+  animation: bouncing-loader 0.6s infinite alternate;
+}
+
+.bouncing-dot:nth-of-type(2) {
+  animation-delay: 0.2s;
+}
+
+.bouncing-dot:nth-of-type(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bouncing-loader {
+  to {
+    opacity: 0.25;
+    transform: translateY(-100%);
+  }
 }
 
 @layer base {

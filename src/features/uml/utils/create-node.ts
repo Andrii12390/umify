@@ -20,7 +20,7 @@ export const createNodeWithData = <T extends Node['data']>(config: {
   style?: Node['style'];
 }): Node<T> =>
   ({
-    id: `${config.idPrefix}-${crypto.randomUUID()}`,
+    id: `${config.idPrefix}-${Math.random()}`,
     ...config,
     selected: true,
   }) as Node<T>;

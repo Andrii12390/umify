@@ -2,6 +2,8 @@
 
 import bcrypt from 'bcrypt';
 
+import type { ActionResult, User } from '@/types';
+
 import { generateAvatar } from '@/features/auth/utils/generate-avatar';
 import { prisma } from '@/lib/prisma';
 
@@ -19,7 +21,7 @@ export async function registerUser({
   password,
   imageUrl,
   isVerified = false,
-}: Payload) {
+}: Payload): Promise<ActionResult<User>> {
   try {
     const existingUser = await prisma.user.findUnique({
       where: {
@@ -28,12 +30,12 @@ export async function registerUser({
     });
 
     if (existingUser) {
-      throw new Error('User with this email already exists');
+      return { success: false, error: 'User with this email already exists' };
     }
 
     const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
 
-    return prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         email,
         username,
@@ -43,7 +45,9 @@ export async function registerUser({
         avatarColor: generateAvatar(),
       },
     });
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
+
+    return { success: true, data: user };
+  } catch {
+    return { success: false, error: 'Registration failed' };
   }
 }

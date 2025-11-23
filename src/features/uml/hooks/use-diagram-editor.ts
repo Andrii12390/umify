@@ -183,7 +183,7 @@ export const useDiagramEditor = (initialData: DiagramData | null): UseDiagramEdi
       const marker = markerType ? makeMarker(markerType) : undefined;
 
       const newEdge: Edge<LabelEdgeData> = {
-        id: `edge-${crypto.randomUUID()}`,
+        id: `edge-${Math.random()}`,
         type: selectedEdgeType,
         source,
         target,

@@ -1,13 +1,26 @@
+import type { Metadata } from 'next';
+
 import { Suspense } from 'react';
 
+import { Header } from '@/components/header';
 import { DiagramsGrid } from '@/features/diagram/components/grid/diagrams-grid';
 import { DiagramsSkeleton } from '@/features/diagram/components/grid/diagrams-skeleton';
 
+export const metadata: Metadata = {
+  title: 'Diagrams',
+  description: 'Manage your diagrams here',
+};
+
+export const dynamic = 'force-dynamic';
+
 function DiagramsPage() {
   return (
-    <Suspense fallback={<DiagramsSkeleton />}>
-      <DiagramsGrid />
-    </Suspense>
+    <>
+      <Header title="Diagrams" />
+      <Suspense fallback={<DiagramsSkeleton />}>
+        <DiagramsGrid />
+      </Suspense>
+    </>
   );
 }
 

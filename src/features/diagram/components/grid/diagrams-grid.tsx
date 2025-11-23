@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { toast } from 'sonner';
 
 import { PRIVATE_ROUTES } from '@/constants';
 import { getDiagrams } from '@/features/diagram/actions';
@@ -8,10 +7,6 @@ import { DiagramCard } from '@/features/diagram/components/card/diagram-card';
 
 export const DiagramsGrid = async () => {
   const res = await getDiagrams();
-
-  if (!res.success) {
-    toast.error(res.error);
-  }
 
   const diagrams = res.success ? res.data : [];
 
