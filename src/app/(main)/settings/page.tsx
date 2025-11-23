@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: 'Manage your preferences here',
 };
 
+export const dynamic = 'force-dynamic';
+
 function SettingsPage() {
   return (
     <>

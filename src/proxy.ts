@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 
 import { PRIVATE_ROUTES, PUBLIC_ROUTES } from '@/constants';
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const token = await getToken({ req });
 

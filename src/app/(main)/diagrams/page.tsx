@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: 'Manage your diagrams here',
 };
 
+export const dynamic = 'force-dynamic';
+
 function DiagramsPage() {
   return (
     <>
