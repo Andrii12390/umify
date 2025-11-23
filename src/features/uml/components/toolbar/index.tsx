@@ -34,7 +34,7 @@ export const Toolbar = ({
 }: Props) => {
   const componentGroups = [
     {
-      title: 'Use Case',
+      title: 'Use Case Diagram',
       items: [
         { iconSrc: '/uml/nodes/actor.svg', label: 'Actor', onClick: onAddActor },
         { iconSrc: '/uml/nodes/use-case.svg', label: 'Use Case', onClick: onAddUseCase },
@@ -125,7 +125,7 @@ export const Toolbar = ({
     <aside className="bg-card h-full p-2">
       <Accordion
         type="multiple"
-        defaultValue={['Use Case', 'Class Diagram', 'Relationships']}
+        defaultValue={['Use Case Diagram', 'Class Diagram', 'Package Diagram', 'Relationships']}
         className="w-full space-y-2"
       >
         {componentGroups.map(({ title, items }) => (
