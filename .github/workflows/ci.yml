@@ -9,7 +9,8 @@ on:
 jobs:
   build-test-lint:
     runs-on: ubuntu-latest
-
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -41,15 +42,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Generate Prisma Client
-        run: |
-          if [ -f "prisma/schema.prisma" ]; then
-            echo "Prisma schema found, generating client..."
-            pnpm prisma generate
-          else
-            echo "No Prisma schema found, skipping..."
-          fi
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: pnpm prisma generate
 
       - name: Linting
         run: pnpm lint
