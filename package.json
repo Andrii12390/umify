@@ -10,7 +10,7 @@
     "test": "vitest --passWithNoTests",
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
-    "postinstall": "prisma generate --no-engine"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
