@@ -27,7 +27,7 @@ export const UseCaseNode = memo(function UseCaseNode({ data, selected }: NodePro
   );
 
   return (
-    <div className={cn('group relative transition-all', selected && DIAGRAM_CLS.useCaseSelected)}>
+    <div className={cn('group relative transition-all', selected && DIAGRAM_CLS.nodeSelected)}>
       {handles.map(({ id, type, position }) => (
         <Handle
           id={id}

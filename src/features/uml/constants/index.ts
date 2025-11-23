@@ -3,8 +3,7 @@ import { MarkerType } from 'reactflow';
 import type { EdgeTerminatorSettings, EdgeType } from '../types';
 
 export const DIAGRAM_CLS = {
-  nodeSelected: 'ring-2 ring-primary ring-offset-2',
-  useCaseSelected: 'ring-2 ring-primary ring-offset-4',
+  nodeSelected: 'ring-2 ring-primary',
   noteWrapper: 'relative bg-background transition-all select-none',
   systemBoundary:
     'w-full h-full z-0 relative rounded border-2 border-border bg-background/50 transition-all',
@@ -15,7 +14,7 @@ export const DIAGRAM_CLS = {
 };
 
 export const HANDLE_BASE_CLS =
-  'size-3 rounded-full border-2 border-primary bg-background opacity-0 transition-opacity group-hover:opacity-100';
+  'size-2! rounded-full border-2 border-primary bg-background opacity-0 transition-opacity group-hover:opacity-100';
 
 export const EDGE_COLORS = {
   default: 'var(--diagram-edge-color, #555)',
