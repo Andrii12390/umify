@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo, useCallback } from 'react';
 import { Handle, Position, useNodeId, type NodeProps, type HandleType } from 'reactflow';
 
@@ -64,7 +65,7 @@ export const ActorNode = memo(function ActorNode({ data, selected }: NodeProps<A
             key={`${position}-${type}-${id}`}
             type={type}
             position={position}
-            className={cn(HANDLE_BASE_CLS, 'absolute')}
+            className={clsx(HANDLE_BASE_CLS, 'absolute', selected && 'opacity-100')}
             style={style}
             isConnectable
           />

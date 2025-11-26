@@ -153,8 +153,8 @@ export const Toolbar = ({
                       className={clsx(
                         'size-12 cursor-pointer rounded-md border transition-colors',
                         isSelected
-                          ? 'bg-primary/15 border-primary shadow-sm'
-                          : 'hover:bg-primary/15 hover:border-primary',
+                          ? 'bg-primary/15! border-primary shadow-sm'
+                          : 'hover:bg-primary/15! hover:border-primary',
                       )}
                     >
                       <Image
