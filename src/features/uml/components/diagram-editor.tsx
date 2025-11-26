@@ -45,7 +45,7 @@ const DiagramEditorInner = ({
       className="h-full w-full"
     >
       <ResizablePanel
-        className="min-w-30 overflow-y-auto"
+        className="bg-card min-w-30 overflow-y-auto!"
         defaultSize={20}
       >
         <Toolbar

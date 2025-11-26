@@ -39,6 +39,10 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-diagram: var(--diagram);
+  --color-diagram-edge: var(--diagram-edge);
+  --color-diagram-edge-selected: var(--diagram-edge-selected);
+  --color-empty-fill: var(--empty-fill);
 }
 
 :root {
@@ -74,7 +78,10 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.841 0.238 128.85);
-  --bg-diagram: #ffffff;
+  --diagram: #ffffff;
+  --diagram-edge: #2A2A2A;
+  --diagram-edge-selected: #000000;
+  --empty-fill: #FFFFFF;
 }
 .dark {
   --background: oklch(0.141 0.005 285.823);
@@ -108,7 +115,10 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.405 0.101 131.063);
-  --bg-diagram: #333333;
+  --diagram: #333333;
+  --diagram-edge: #E6E6E6;
+  --diagram-edge-selected: #FFFFFF;
+  --empty-fill: #333333;
 }
 
 .light .react-flow__pane,

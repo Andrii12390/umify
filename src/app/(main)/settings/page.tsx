@@ -15,8 +15,10 @@ function SettingsPage() {
   return (
     <>
       <Header title="Settings" />
-      <ThemeSwitcher />
-      <DiagramSettings />
+      <div className="flex-1 overflow-y-auto">
+        <ThemeSwitcher />
+        <DiagramSettings />
+      </div>
     </>
   );
 }

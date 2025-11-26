@@ -22,7 +22,7 @@ export const DEFAULT_OPTIONS: Required<Omit<ExportOptions, 'backgroundColor' | '
 } = {
   width: 1920,
   height: 1080,
-  backgroundColor: 'var(--bg-diagram)',
+  backgroundColor: 'var(--color-diagram)',
   padding: 0.5,
   maxZoom: 2,
   minZoom: 0.1,

@@ -11,7 +11,7 @@ export const ThemeSwitcher = () => {
   return (
     <div className="p-4 lg:p-6">
       <div className="mb-6">
-        <h2 className="mb-2 text-2xl font-semibold">Appearance</h2>
+        <h2 className="mb-2 text-xl font-semibold">Appearance</h2>
         <p className="text-secondary-foreground text-sm">
           Customize the theme and appearance of the interface
         </p>

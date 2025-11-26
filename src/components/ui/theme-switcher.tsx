@@ -17,7 +17,7 @@ export const ThemeSwitcher = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="bg-secondary focus:ring-primary relative inline-flex h-9 w-16 cursor-pointer items-center rounded-full transition-colors focus:ring-2 focus:outline-none"
+      className="bg-secondary relative inline-flex h-9 w-16 cursor-pointer items-center rounded-full transition-colors"
     >
       <span
         className={cn(
@@ -26,7 +26,7 @@ export const ThemeSwitcher = () => {
         )}
       >
         {isDark ? (
-          <Moon className="size-4 text-indigo-500" />
+          <Moon className="text-primary size-4" />
         ) : (
           <Sun className="size-4 text-yellow-500" />
         )}

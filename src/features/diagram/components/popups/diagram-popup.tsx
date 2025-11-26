@@ -95,6 +95,7 @@ export const DiagramPopup = ({
                 type="button"
                 size="lg"
                 variant="outline"
+                className="cursor-pointer"
                 onClick={handleCancel}
                 disabled={disabled}
               >
@@ -102,6 +103,7 @@ export const DiagramPopup = ({
               </Button>
               <Button
                 size="lg"
+                className="cursor-pointer"
                 disabled={disabled}
               >
                 {submitLabel}

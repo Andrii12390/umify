@@ -15,15 +15,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { STORAGE_KEYS } from '@/constants';
 import { saveDiagram } from '@/features/uml/actions';
-import { DEFAULT_OPTIONS, makeExportHandler } from '@/features/uml/utils';
+import { makeExportHandler } from '@/features/uml/utils';
 
 interface Props {
   diagramId: string;
-  width?: number;
-  height?: number;
-  backgroundColor?: string | null;
-  filePrefix?: string;
-  pixelRatio?: number;
 }
 
 const dropdownItems = [
@@ -33,23 +28,12 @@ const dropdownItems = [
   { key: 'pdf', label: 'PDF', Icon: FileText },
 ];
 
-export const DownloadMenu = ({
-  diagramId,
-  width = DEFAULT_OPTIONS.width,
-  height = DEFAULT_OPTIONS.height,
-  backgroundColor = DEFAULT_OPTIONS.backgroundColor,
-  filePrefix = 'diagram',
-  pixelRatio = DEFAULT_OPTIONS.pixelRatio,
-}: Props) => {
+export const DownloadMenu = ({ diagramId }: Props) => {
   const reactFlow = useReactFlow();
   const { toObject } = useReactFlow();
-  const handleExport = makeExportHandler(
-    {
-      ...reactFlow,
-    },
-    filePrefix,
-    { width, height, backgroundColor, pixelRatio },
-  );
+  const handleExport = makeExportHandler({
+    ...reactFlow,
+  });
 
   useEffect(() => {
     const enabled = !!localStorage.getItem(STORAGE_KEYS.AUTO_SAVE_ENABLED);
@@ -85,7 +69,7 @@ export const DownloadMenu = ({
       className="flex gap-2"
     >
       <Button
-        className="rounded-lg shadow-md"
+        className="cursor-pointer rounded-lg shadow-md"
         variant="outline"
         onClick={handleSave}
       >
@@ -93,7 +77,7 @@ export const DownloadMenu = ({
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button className="rounded-lg shadow-md">
+          <Button className="cursor-pointer rounded-lg shadow-md">
             <Download className="size-4" /> Export
           </Button>
         </DropdownMenuTrigger>
@@ -101,11 +85,12 @@ export const DownloadMenu = ({
           align="end"
           className="min-w-42 rounded-md"
         >
-          <DropdownMenuLabel>File Format</DropdownMenuLabel>
+          <DropdownMenuLabel>Format</DropdownMenuLabel>
           {dropdownItems.map(({ key, label, Icon }) => (
             <DropdownMenuItem
               key={key}
               onClick={() => handleExport(key as ExportFormat)}
+              className="cursor-pointer"
             >
               <Icon className="size-4" /> {label}
             </DropdownMenuItem>

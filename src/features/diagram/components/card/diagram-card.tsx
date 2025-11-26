@@ -36,7 +36,7 @@ export const DiagramCard = ({ id, name, lastModified }: Props) => {
           isOpen={isOpen}
           setIsOpen={setIsOpen}
         >
-          <div className="flex size-7 items-center justify-center rounded opacity-0 transition-all group-hover:opacity-100">
+          <div className="flex size-7 items-center justify-center rounded transition-all group-hover:opacity-100 lg:opacity-0">
             <MoreVertical className="size-4" />
           </div>
         </DiagramActions>

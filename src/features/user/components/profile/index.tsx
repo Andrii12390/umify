@@ -22,7 +22,7 @@ export const Profile = ({ user }: { user: User }) => {
   const [activeTab, setActiveTab] = useState<TabId>('profile');
 
   return (
-    <div className="mx-auto w-fit space-y-6 p-4 lg:p-6">
+    <div className="mx-auto w-fit flex-1 space-y-6 overflow-y-auto p-4 lg:p-6">
       <div className="mb-8 grid w-full grid-cols-2 border-b border-gray-700">
         {TABS.map(({ id, label, icon: Icon }) => {
           const isActive = activeTab === id;
@@ -32,7 +32,7 @@ export const Profile = ({ user }: { user: User }) => {
               key={id}
               onClick={() => setActiveTab(id)}
               className={cn(
-                'relative px-6 py-3 font-medium transition-all',
+                'relative cursor-pointer px-6 py-3 font-medium transition-all',
                 isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
               )}
             >

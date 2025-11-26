@@ -162,7 +162,7 @@ export const Toolbar = ({
                         width={28}
                         height={28}
                         alt={label}
-                        className="size-7 stroke-red-500! dark:invert"
+                        className="size-7 dark:invert"
                       />
                     </Button>
                   );

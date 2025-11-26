@@ -11,7 +11,7 @@ export const DiagramsGrid = async () => {
   const diagrams = res.success ? res.data : [];
 
   return (
-    <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 lg:p-6 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 overflow-y-auto p-4 md:grid-cols-2 lg:grid-cols-3 lg:p-6 xl:grid-cols-4">
       {diagrams.map(diagram => (
         <Link
           key={diagram.id}

@@ -28,7 +28,6 @@ export const updateUser = async (data: ProfileValues): Promise<ActionResult<User
       },
       data: {
         username: data.username,
-        email: data.email,
         ...(imageUrl ? { imageUrl } : {}),
       },
       omit: {
