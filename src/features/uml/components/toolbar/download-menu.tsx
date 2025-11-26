@@ -1,4 +1,5 @@
 import { Download, FileText, Image, Save } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
 import { Panel, useReactFlow } from 'reactflow';
 import { toast } from 'sonner';
@@ -28,12 +29,22 @@ const dropdownItems = [
   { key: 'pdf', label: 'PDF', Icon: FileText },
 ];
 
+const diagramBackgroundMap = {
+  light: '#ffffff',
+  dark: '#000000',
+};
+
 export const DownloadMenu = ({ diagramId }: Props) => {
   const reactFlow = useReactFlow();
+  const { theme } = useTheme();
   const { toObject } = useReactFlow();
-  const handleExport = makeExportHandler({
-    ...reactFlow,
-  });
+  const handleExport = makeExportHandler(
+    {
+      ...reactFlow,
+    },
+    'diagram',
+    diagramBackgroundMap[theme as keyof typeof diagramBackgroundMap],
+  );
 
   useEffect(() => {
     const enabled = !!localStorage.getItem(STORAGE_KEYS.AUTO_SAVE_ENABLED);
