@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const Header = ({ backHref, title }: Props) => (
-  <header className="bg-background sticky top-0 z-100 flex h-18 shrink-0 items-center justify-between border-b px-4 md:h-14 md:px-6">
+  <header className="bg-background sticky top-0 z-50 flex h-18 shrink-0 items-center justify-between border-b px-4 md:h-14 md:px-6">
     <div className="flex items-center gap-2">
       {backHref ? (
         <Link

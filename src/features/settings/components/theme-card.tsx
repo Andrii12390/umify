@@ -13,7 +13,7 @@ interface Props {
 export const ThemeCard = ({ value, text, onClick, isActive, icon: Icon }: Props) => {
   const cardClassName = cn(
     'bg-card group flex cursor-pointer flex-col items-center justify-center rounded-md border px-6 py-8 shadow-md transition-colors',
-    isActive ? 'border-primary/50 bg-primary/15' : 'hover:bg-primary/15 hover:border-primary/50',
+    isActive ? 'border-primary/50 bg-primary/10' : 'hover:bg-primary/10 hover:border-primary/50',
   );
 
   const iconWrapperClassName = cn(

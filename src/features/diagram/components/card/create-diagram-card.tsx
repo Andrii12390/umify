@@ -8,13 +8,13 @@ import { CreateDiagramPopup } from '../popups/create-diagram-popup';
 
 export const CreateDiagramCard = () => (
   <CreateDiagramPopup>
-    <Button className="bg-card group border-muted-foreground/25 hover:border-primary hover:bg-primary/5 relative flex min-h-32 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg border-2 border-dashed p-6 transition-all">
+    <Button className="bg-card group border-muted-foreground/25 hover:border-primary hover:bg-primary/5 relative flex size-50 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg border-2 border-dashed p-6 md:size-55">
       <div className="flex flex-col items-center gap-2">
-        <div className="bg-primary/10 rounded-full p-3 transition-transform group-hover:scale-110">
-          <Plus className="text-primary size-5" />
+        <div className="bg-primary/10 rounded-full p-4 transition-transform group-hover:scale-110">
+          <Plus className="text-primary size-6" />
         </div>
 
-        <span className="text-muted-foreground group-hover:text-foreground text-sm font-medium">
+        <span className="text-muted-foreground group-hover:text-foreground text-md font-medium">
           Create new diagram
         </span>
       </div>

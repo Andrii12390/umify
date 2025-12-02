@@ -53,7 +53,7 @@ export const DiagramSettings = () => {
       <section
         className={cn(
           'rounded-xl border-2 p-6',
-          autoSaveEnabled && 'border-primary/50 bg-primary/15',
+          autoSaveEnabled && 'border-primary/50 bg-primary/10',
         )}
       >
         <div className="flex items-center justify-between">

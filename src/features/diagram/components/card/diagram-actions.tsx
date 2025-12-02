@@ -1,6 +1,6 @@
 import type { PropsWithChildren, Dispatch, SetStateAction } from 'react';
 
-import { Trash2, SquarePen } from 'lucide-react';
+import { Trash2, SquarePen, Star } from 'lucide-react';
 import { toast } from 'sonner';
 
 import {
@@ -9,6 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { deleteDiagram, updateDiagram } from '@/features/diagram/actions';
 
@@ -29,10 +30,12 @@ export const DiagramActions = ({ id, name, isOpen, setIsOpen, children }: Props)
     <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
     <DropdownMenuContent
       align="end"
-      className="w-40 overflow-y-auto"
+      className="text-foreground/80 w-50 overflow-y-auto px-0"
       onClick={e => e.stopPropagation()}
     >
-      <DropdownMenuLabel>Diagram Actions</DropdownMenuLabel>
+      <DropdownMenuLabel className="text-secondary-foreground text-foreground/80 text-xs font-bold uppercase">
+        More Actions
+      </DropdownMenuLabel>
 
       <UpdateDiagramPopup
         name={name}
@@ -45,15 +48,25 @@ export const DiagramActions = ({ id, name, isOpen, setIsOpen, children }: Props)
         }}
       >
         <DropdownMenuItem
-          className="flex items-center justify-between"
+          className="flex cursor-pointer items-center rounded-none px-3"
           onSelect={e => e.preventDefault()}
         >
+          <SquarePen className="size-4" />
           <span>Edit</span>
-          <SquarePen />
         </DropdownMenuItem>
       </UpdateDiagramPopup>
       <DropdownMenuItem
-        className="flex items-center justify-between"
+        className="flex cursor-pointer items-center rounded-none px-3"
+        onClick={() => {
+          // TODO: implement favorites
+        }}
+      >
+        <Star className="size-4" />
+        <span>Add to favorites</span>
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem
+        className="flex cursor-pointer items-center rounded-none px-3"
         onClick={() => {
           deleteDiagram(id).then(res => {
             if (!res.success) {
@@ -62,8 +75,8 @@ export const DiagramActions = ({ id, name, isOpen, setIsOpen, children }: Props)
           });
         }}
       >
-        <span>Delete</span>
-        <Trash2 className="text-destructive" />
+        <Trash2 className="text-destructive size-4" />
+        <span className="text-destructive">Delete</span>
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>

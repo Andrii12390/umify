@@ -28,7 +28,7 @@ export const SidebarMenu = ({ items, isCollapsed }: Props) => (
                 className={cn(
                   'hover:text-primary active:text-primary',
                   isActive
-                    ? 'bg-primary/15 hover:bg-primary/15 active:bg-primary/15'
+                    ? 'bg-primary/10 hover:bg-primary/10 active:bg-primary/10'
                     : 'hover:bg-sidebar active:bg-sidebar',
                 )}
               >
