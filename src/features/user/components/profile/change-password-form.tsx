@@ -68,7 +68,7 @@ export const ChangePasswordForm = () => {
         )}
         <Button
           disabled={form.formState.isSubmitting}
-          className="text-md mx-auto w-full cursor-pointer text-center"
+          className="text-md mx-auto mt-2 w-full cursor-pointer text-center"
           data-testid="profile-submit"
         >
           {form.formState.isSubmitting && <LoaderCircle className="animate-spin" />}

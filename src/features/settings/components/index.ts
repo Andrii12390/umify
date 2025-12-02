@@ -1,1 +1,1 @@
-export { ThemeSwitcher } from './theme-switcher';
+export { DiagramSettings } from './diagram-settings';
