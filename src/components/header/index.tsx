@@ -9,18 +9,18 @@ interface Props {
 }
 
 export const Header = ({ backHref, title }: Props) => (
-  <header className="flex h-18 shrink-0 items-center justify-between border-b px-6 md:h-14">
+  <header className="bg-background sticky top-0 z-50 flex h-18 shrink-0 items-center justify-between border-b px-4 md:h-14 md:px-6">
     <div className="flex items-center gap-2">
-      {!!backHref ? (
+      {backHref ? (
         <Link
           className="flex cursor-pointer items-center gap-2"
           href={backHref!}
         >
           <ChevronLeft />
-          <span className="text-xl font-medium">Go Back</span>
+          <span className="text-2xl font-medium md:text-xl">Go Back</span>
         </Link>
       ) : (
-        <span className="text-xl font-medium">{title}</span>
+        <span className="text-2xl font-medium md:text-xl">{title}</span>
       )}
     </div>
 

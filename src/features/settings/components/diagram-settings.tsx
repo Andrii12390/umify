@@ -44,7 +44,7 @@ export const DiagramSettings = () => {
   return (
     <div className="p-4 lg:p-6">
       <header className="mb-6">
-        <h2 className="mb-2 text-2xl font-semibold">Auto-save</h2>
+        <h2 className="mb-2 text-xl font-semibold">Auto-save</h2>
         <p className="text-secondary-foreground text-sm">
           Automatically save your diagrams at regular intervals
         </p>
@@ -53,7 +53,7 @@ export const DiagramSettings = () => {
       <section
         className={cn(
           'rounded-xl border-2 p-6',
-          autoSaveEnabled && 'border-primary/50 bg-primary/15',
+          autoSaveEnabled && 'border-primary/50 bg-primary/10',
         )}
       >
         <div className="flex items-center justify-between">
@@ -82,7 +82,7 @@ export const DiagramSettings = () => {
         <div
           className={cn(
             'overflow-hidden transition-all duration-300',
-            autoSaveEnabled ? 'mt-6 max-h-30 opacity-100' : 'max-h-0 opacity-0',
+            autoSaveEnabled ? 'mt-6 max-h-50 opacity-100' : 'max-h-0 opacity-0',
           )}
         >
           <div className="border-primary/15 border-t pt-4">

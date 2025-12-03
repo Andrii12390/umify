@@ -1,6 +1,6 @@
 'use client';
 
-import { Settings, User, BarChart3 } from 'lucide-react';
+import { Settings, User, BarChart3, Star } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 
@@ -28,6 +28,12 @@ export const useMenu = () => {
         icon: Settings,
         label: 'Settings',
         isActive: pathname.startsWith(PRIVATE_ROUTES.SETTINGS),
+      },
+      {
+        href: PRIVATE_ROUTES.FAVORITES,
+        icon: Star,
+        label: 'Favorites',
+        isActive: pathname.startsWith(PRIVATE_ROUTES.FAVORITES),
       },
     ],
     [pathname],

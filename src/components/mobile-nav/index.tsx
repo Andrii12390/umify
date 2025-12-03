@@ -10,7 +10,7 @@ export const MobileNav = () => {
 
   return (
     <nav className="border-t md:hidden">
-      <ul className="grid grid-cols-3">
+      <ul className="grid grid-cols-4">
         {menu.map(({ href, label, icon: Icon, isActive }) => (
           <li
             key={label}

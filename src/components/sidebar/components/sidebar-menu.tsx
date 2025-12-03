@@ -28,16 +28,19 @@ export const SidebarMenu = ({ items, isCollapsed }: Props) => (
                 className={cn(
                   'hover:text-primary active:text-primary',
                   isActive
-                    ? 'bg-primary/15 hover:bg-primary/15 active:bg-primary/15'
+                    ? 'bg-primary/10 hover:bg-primary/10 active:bg-primary/10'
                     : 'hover:bg-sidebar active:bg-sidebar',
                 )}
               >
                 <Link
                   href={href}
-                  className={cn('flex items-center gap-3 px-3 py-2', isActive && 'text-primary')}
+                  className={cn(
+                    'text-foreground/80 flex items-center gap-3 px-3 py-2',
+                    isActive && 'text-primary',
+                  )}
                 >
-                  <Icon className="size-5" />
-                  {!isCollapsed && <span>{label}</span>}
+                  <Icon className="size-[18px]!" />
+                  {!isCollapsed && <span className="font-medium">{label}</span>}
                 </Link>
               </SidebarMenuButton>
             </TooltipTrigger>

@@ -57,7 +57,7 @@ export const SocialOptions = () => {
             key={label}
             variant="outline"
             type="button"
-            className="flex-grow"
+            className="flex-grow cursor-pointer"
             onClick={onClick}
           >
             {icon}

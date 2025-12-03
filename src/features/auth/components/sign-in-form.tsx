@@ -88,7 +88,7 @@ export const SignInForm = () => {
         <FormError message={errors.root?.message} />
         <Button
           disabled={isSubmitting}
-          className="text-md mx-auto mt-4 w-1/2 text-center"
+          className="text-md mx-auto mt-4 w-1/2 cursor-pointer text-center"
           data-testid="signIn-submit"
         >
           {isSubmitting && <LoaderCircle className="animate-spin" />}

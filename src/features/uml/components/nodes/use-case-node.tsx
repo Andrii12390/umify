@@ -1,5 +1,6 @@
 import type { HandleType } from 'reactflow';
 
+import { clsx } from 'clsx';
 import { memo, useCallback } from 'react';
 import { Handle, Position, useNodeId, type NodeProps } from 'reactflow';
 
@@ -34,7 +35,7 @@ export const UseCaseNode = memo(function UseCaseNode({ data, selected }: NodePro
           key={`${position}-${type}-${id}`}
           type={type}
           position={position}
-          className={HANDLE_BASE_CLS}
+          className={clsx(HANDLE_BASE_CLS, selected && 'opacity-100')}
           isConnectable
         />
       ))}

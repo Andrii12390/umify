@@ -4,12 +4,18 @@ import { Skeleton } from '@/components/ui/skeleton';
 const SKELETON_COUNT = 8;
 
 export const DiagramsSkeleton = () => (
-  <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 lg:p-6 xl:grid-cols-4">
+  <div className="flex flex-wrap gap-4 overflow-y-auto p-4 lg:p-6">
     {times(SKELETON_COUNT, idx => (
-      <Skeleton
+      <div
+        className="bg-card flex h-50 w-55 flex-col overflow-hidden rounded-md shadow-sm md:h-55 md:w-60"
         key={idx}
-        className="min-h-32 rounded-lg shadow-sm"
-      />
+      >
+        <Skeleton className="h-full w-full rounded-none!" />
+        <div className="space-y-2 px-3 py-2.5">
+          <Skeleton className="h-4 w-full rounded-sm" />
+          <Skeleton className="h-4 w-2/3 rounded-sm" />
+        </div>
+      </div>
     ))}
   </div>
 );

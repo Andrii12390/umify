@@ -61,7 +61,7 @@ export const SignUpForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-primary/25 dark:shadow-primary/50 border-border flex w-xs flex-col gap-4 rounded-md border p-10 shadow-2xl lg:w-sm"
+        className="shadow-primary/25 dark:shadow-primary/50 border-border flex w-xs flex-col gap-4 rounded-md border p-10 shadow-2xl lg:w-sm"
       >
         <h3
           className="text-center text-2xl font-semibold"
@@ -108,7 +108,7 @@ export const SignUpForm = () => {
         <SocialOptions />
         <Button
           disabled={isSubmitting}
-          className="text-md mx-auto mt-4 w-1/2 text-center"
+          className="text-md mx-auto mt-4 w-1/2 cursor-pointer text-center"
           data-testid="signUp-submit"
         >
           {isSubmitting && <LoaderCircle className="animate-spin" />}

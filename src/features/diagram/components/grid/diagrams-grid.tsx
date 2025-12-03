@@ -4,14 +4,24 @@ import { PRIVATE_ROUTES } from '@/constants';
 import { getDiagrams } from '@/features/diagram/actions';
 import { CreateDiagramCard } from '@/features/diagram/components/card/create-diagram-card';
 import { DiagramCard } from '@/features/diagram/components/card/diagram-card';
+import { EmptyFavorites } from '@/features/diagram/components/grid/empty-state';
 
-export const DiagramsGrid = async () => {
-  const res = await getDiagrams();
+interface Props {
+  fetchFavorites?: boolean;
+  showCreateCard?: boolean;
+}
+
+export const DiagramsGrid = async ({ fetchFavorites, showCreateCard = true }: Props) => {
+  const res = await getDiagrams(fetchFavorites);
 
   const diagrams = res.success ? res.data : [];
 
+  if (fetchFavorites && !diagrams.length) {
+    return <EmptyFavorites />;
+  }
+
   return (
-    <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3 lg:p-6 xl:grid-cols-4">
+    <div className="flex flex-wrap gap-4 overflow-y-auto p-4 lg:p-6">
       {diagrams.map(diagram => (
         <Link
           key={diagram.id}
@@ -20,7 +30,7 @@ export const DiagramsGrid = async () => {
           <DiagramCard {...diagram} />
         </Link>
       ))}
-      <CreateDiagramCard />
+      {showCreateCard && <CreateDiagramCard />}
     </div>
   );
 };

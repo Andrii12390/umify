@@ -34,7 +34,6 @@ export const ProfileForm = ({ initialValues }: Props) => {
     mode: 'onChange',
     defaultValues: {
       username: '',
-      email: '',
       photo: initialValues?.imageUrl ?? undefined,
       ...initialValues,
     },
@@ -49,6 +48,8 @@ export const ProfileForm = ({ initialValues }: Props) => {
 
     toast.success('Profile updated successfully');
   };
+
+  const { isSubmitting } = form.formState;
 
   return (
     <Form {...form}>
@@ -69,7 +70,7 @@ export const ProfileForm = ({ initialValues }: Props) => {
                 <ImageUpload
                   value={field.value}
                   onChange={field.onChange}
-                  disabled={form.formState.isSubmitting}
+                  disabled={isSubmitting}
                 />
               </FormControl>
               <FormMessage />
@@ -83,20 +84,13 @@ export const ProfileForm = ({ initialValues }: Props) => {
           name="username"
           testId="profile-username-field"
         />
-        <TextInputField
-          control={form.control}
-          label="Email"
-          name="email"
-          type="email"
-          testId="profile-email-field"
-        />
 
         <Button
-          disabled={form.formState.isSubmitting}
-          className="text-md mx-auto w-full cursor-pointer text-center"
+          disabled={isSubmitting}
+          className="text-md mx-auto mt-2 w-full cursor-pointer text-center"
           data-testid="profile-submit"
         >
-          {form.formState.isSubmitting && <LoaderCircle className="animate-spin" />}
+          {isSubmitting && <LoaderCircle className="animate-spin" />}
           Save
         </Button>
       </form>

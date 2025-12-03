@@ -8,6 +8,7 @@ export const PRIVATE_ROUTES = {
   DIAGRAMS: '/diagrams',
   PROFILE: '/profile',
   SETTINGS: '/settings',
+  FAVORITES: '/favorites',
 } as const;
 
 export const STORAGE_KEYS = {

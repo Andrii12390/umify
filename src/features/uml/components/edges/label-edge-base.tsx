@@ -26,8 +26,8 @@ export type LabelEdgeProps = EdgeProps<LabelEdgeData> & {
 
 const TerminatorIcon = ({ shape, color }: { shape: EdgeTerminatorShape; color: string }) => {
   const commonProps = {
-    width: 12,
-    height: 12,
+    width: 16,
+    height: 16,
     viewBox: '-12 -12 24 24',
   };
 
@@ -42,7 +42,7 @@ const TerminatorIcon = ({ shape, color }: { shape: EdgeTerminatorShape; color: s
             points="10,0 -8,-6 -8,6"
             stroke={color}
             strokeWidth={2}
-            fill={'#ffffff'}
+            fill="var(--empty-fill)"
             strokeLinejoin="round"
           />
         </svg>
@@ -65,7 +65,7 @@ const TerminatorIcon = ({ shape, color }: { shape: EdgeTerminatorShape; color: s
       return (
         <svg
           {...commonProps}
-          fill="hsl(var(--background))"
+          fill="var(--empty-fill)"
           stroke={color}
           strokeWidth={2}
           strokeLinejoin="round"
@@ -78,7 +78,6 @@ const TerminatorIcon = ({ shape, color }: { shape: EdgeTerminatorShape; color: s
       return (
         <svg
           {...commonProps}
-          fill={color}
           stroke={color}
           strokeWidth={1.5}
           strokeLinejoin="round"

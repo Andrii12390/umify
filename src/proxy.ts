@@ -26,6 +26,7 @@ export const config = {
     '/verification',
     '/diagrams/:path*',
     '/profile/:path*',
+    '/favorites/:path*',
     '/settings/:path*',
   ],
 };

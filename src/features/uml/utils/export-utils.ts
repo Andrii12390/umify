@@ -4,25 +4,10 @@ import { getNodesBounds, getViewportForBounds, type Node } from 'reactflow';
 
 export type ExportFormat = 'png' | 'jpg' | 'svg' | 'pdf';
 
-export interface ExportOptions {
-  width?: number;
-  height?: number;
-  backgroundColor?: string | null;
-  padding?: number;
-  maxZoom?: number;
-  minZoom?: number;
-  jpegQuality?: number;
-  pixelRatio?: number;
-  selector?: string;
-}
-
-export const DEFAULT_OPTIONS: Required<Omit<ExportOptions, 'backgroundColor' | 'selector'>> & {
-  backgroundColor: string | null;
-  selector: string;
-} = {
+export const DEFAULT_OPTIONS = {
   width: 1920,
   height: 1080,
-  backgroundColor: 'var(--bg-diagram)',
+  backgroundColor: '#ffffff',
   padding: 0.5,
   maxZoom: 2,
   minZoom: 0.1,
@@ -30,6 +15,8 @@ export const DEFAULT_OPTIONS: Required<Omit<ExportOptions, 'backgroundColor' | '
   pixelRatio: 2,
   selector: '.react-flow__viewport',
 };
+
+type Options = typeof DEFAULT_OPTIONS;
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
 
@@ -43,22 +30,22 @@ const withExt = (base: string, ext: string) => `${base}.${ext}`;
 const ensureDom = (selector: string): HTMLElement => {
   const el = document.querySelector(selector) as HTMLElement | null;
   if (!el) {
-    throw new Error();
+    throw new Error(`Element not found by selector: ${selector}`);
   }
 
   return el;
 };
 
-const computeTransform = (nodes: Node[], opt: Required<ExportOptions>) => {
+const computeTransform = (nodes: Node[], opt: Required<Options>) => {
   const bounds = getNodesBounds(nodes);
   return getViewportForBounds(bounds, opt.width, opt.height, opt.padding, opt.maxZoom, opt.minZoom);
 };
 
 const buildHtmlToImageOptions = (
   transform: { x: number; y: number; zoom: number },
-  opt: Required<ExportOptions>,
+  opt: Required<Options>,
 ) => ({
-  backgroundColor: opt.backgroundColor ?? undefined, // undefined preserves transparency for PNG
+  backgroundColor: opt.backgroundColor ?? undefined,
   width: opt.width,
   height: opt.height,
   cacheBust: true,
@@ -82,7 +69,7 @@ const triggerDownload = (href: string, filename: string) => {
 const exportPNG = async (
   el: HTMLElement,
   transform: ReturnType<typeof computeTransform>,
-  opt: Required<ExportOptions>,
+  opt: Required<Options>,
   filename: string,
 ) => {
   const dataUrl = await toPng(el, buildHtmlToImageOptions(transform, opt));
@@ -92,22 +79,24 @@ const exportPNG = async (
 const exportJPEG = async (
   el: HTMLElement,
   transform: ReturnType<typeof computeTransform>,
-  opt: Required<ExportOptions>,
+  opt: Required<Options>,
   filename: string,
 ) => {
   const base = buildHtmlToImageOptions(transform, opt);
+
   const dataUrl = await toJpeg(el, {
     ...base,
     quality: opt.jpegQuality,
     backgroundColor: opt.backgroundColor ?? '#ffffff',
   });
+
   triggerDownload(dataUrl, withExt(filename, 'jpg'));
 };
 
 const exportSVG = async (
   el: HTMLElement,
   transform: ReturnType<typeof computeTransform>,
-  opt: Required<ExportOptions>,
+  opt: Required<Options>,
   filename: string,
 ) => {
   const dataUrl = await toSvg(el, {
@@ -121,7 +110,7 @@ const exportSVG = async (
 const exportPDF = async (
   el: HTMLElement,
   transform: ReturnType<typeof computeTransform>,
-  opt: Required<ExportOptions>,
+  opt: Required<Options>,
   filename: string,
 ) => {
   const pngUrl = await toPng(el, buildHtmlToImageOptions(transform, opt));
@@ -139,12 +128,9 @@ export const exportDiagram = async (
   format: ExportFormat,
   nodes: Node[],
   name = 'diagram',
-  options: ExportOptions = {},
+  backgroundColor: string,
 ): Promise<void> => {
-  const opt: Required<ExportOptions> = {
-    ...DEFAULT_OPTIONS,
-    ...options,
-  } as Required<ExportOptions>;
+  const opt = { ...DEFAULT_OPTIONS, backgroundColor };
 
   const filename = `${name}_${timestamp()}`;
 
@@ -171,13 +157,13 @@ export const makeExportHandler =
       getNodes: () => Node[];
     },
     filePrefix = 'diagram',
-    baseOptions: Partial<ExportOptions> = {},
+    backgroundColor: string,
   ) =>
   async (format: ExportFormat) => {
     const { getNodes } = getters;
 
     try {
-      await exportDiagram(format, getNodes(), filePrefix, baseOptions);
+      await exportDiagram(format, getNodes(), filePrefix, backgroundColor);
     } catch {
       return { success: false, error: 'Failed to export diagram' };
     }

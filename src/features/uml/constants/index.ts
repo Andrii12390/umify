@@ -17,8 +17,8 @@ export const HANDLE_BASE_CLS =
   'size-2! rounded-full border-2 border-primary bg-background opacity-0 transition-opacity group-hover:opacity-100';
 
 export const EDGE_COLORS = {
-  default: 'var(--diagram-edge-color, #555)',
-  selected: 'var(--diagram-edge-selected-color, #3b82f6)',
+  default: 'var(--diagram-edge)',
+  selected: 'var(--diagram-edge-selected)',
 };
 
 export const NOTE = {

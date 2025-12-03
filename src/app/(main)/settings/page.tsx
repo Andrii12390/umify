@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 
 import { Header } from '@/components/header';
-import { DiagramSettings } from '@/features/settings/components/diagram-settings';
-import { ThemeSwitcher } from '@/features/settings/components/theme-switcher';
+import { DiagramSettings } from '@/features/settings/components';
 
 export const metadata: Metadata = {
   title: 'Settings',
@@ -15,8 +14,9 @@ function SettingsPage() {
   return (
     <>
       <Header title="Settings" />
-      <ThemeSwitcher />
-      <DiagramSettings />
+      <div className="flex-1 overflow-y-auto">
+        <DiagramSettings />
+      </div>
     </>
   );
 }

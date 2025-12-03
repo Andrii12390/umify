@@ -56,17 +56,17 @@ export const ImageUpload = ({ value, onChange, disabled }: Props) => {
   return (
     <div className="w-full">
       {preview ? (
-        <div className="border-border relative aspect-square overflow-hidden rounded-lg border-2 border-dashed">
+        <div className="border-border relative h-50 overflow-hidden rounded-lg border-2 border-dashed">
           <Image
             src={preview}
             alt="Preview"
             fill
-            className="object-cover"
+            className="object-contain"
           />
           <Button
             variant="ghost"
             size="icon"
-            className="absolute top-2 right-2"
+            className="absolute top-2 right-2 cursor-pointer"
             onClick={handleRemove}
             disabled={disabled}
           >
@@ -77,7 +77,7 @@ export const ImageUpload = ({ value, onChange, disabled }: Props) => {
         <div
           {...getRootProps()}
           className={cn(
-            'border-border hover:border-primary hover:bg-primary/5 flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors',
+            'border-border hover:border-primary hover:bg-primary/5 flex h-50 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition-colors',
             isDragActive && 'border-primary bg-primary/5',
             disabled && 'cursor-not-allowed opacity-50',
           )}

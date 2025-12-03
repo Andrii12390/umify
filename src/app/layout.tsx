@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
 
-import { Inter } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 
 import { Toaster } from '@/components/ui/sonner';
 
 import './globals.css';
 import { AppProvider } from '@/providers';
 
-const interSans = Inter({
-  variable: '--font-inter-sans',
+const poppins = Poppins({
+  variable: '--font-poppins',
   subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
 });
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
@@ -76,8 +77,11 @@ function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${interSans.variable} antialiased`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+    >
+      <body className={`${poppins.variable} antialiased`}>
         <AppProvider>
           {children}
           <Toaster />

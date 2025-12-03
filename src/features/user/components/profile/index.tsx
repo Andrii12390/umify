@@ -1,58 +1,51 @@
 'use client';
 
-import type { ElementType } from 'react';
-
 import { Lock, User as UserIcon } from 'lucide-react';
-import { useState } from 'react';
 
 import type { User } from '@/types';
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChangePasswordForm } from '@/features/user/components/profile/change-password-form';
 import { ProfileForm } from '@/features/user/components/profile/profile-form';
-import { cn } from '@/lib/utils';
+import { VerificationWrapper } from '@/features/user/components/profile/verification-wrapper';
 
-type TabId = 'profile' | 'password';
-
-const TABS: { id: TabId; label: string; icon: ElementType }[] = [
+const TABS = [
   { id: 'profile', label: 'Profile', icon: UserIcon },
   { id: 'password', label: 'Password', icon: Lock },
 ];
 
 export const Profile = ({ user }: { user: User }) => {
-  const [activeTab, setActiveTab] = useState<TabId>('profile');
-
   return (
-    <div className="mx-auto w-fit space-y-6 p-4 lg:p-6">
-      <div className="mb-8 grid w-full grid-cols-2 border-b border-gray-700">
-        {TABS.map(({ id, label, icon: Icon }) => {
-          const isActive = activeTab === id;
-
-          return (
-            <button
+    <div className="mx-auto flex-1 overflow-y-auto p-4 lg:p-6">
+      <Tabs
+        defaultValue="profile"
+        className="mx-auto w-full max-w-xl space-y-6"
+      >
+        <TabsList className="bg-background grid w-full grid-cols-2 rounded-none border-b p-0">
+          {TABS.map(({ id, label, icon: Icon }) => (
+            <TabsTrigger
               key={id}
-              onClick={() => setActiveTab(id)}
-              className={cn(
-                'relative px-6 py-3 font-medium transition-all',
-                isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
-              )}
+              value={id}
+              className="text-muted-foreground hover:text-foreground data-[state=active]:text-foreground data-[state=active]:border-b-primary! bg-background! flex cursor-pointer items-center justify-center gap-2 rounded-none border-b-2 border-transparent! font-medium data-[state=active]:shadow-none"
             >
-              <div className="flex items-center gap-2">
-                <Icon className="size-[18px]" />
-                <span>{label}</span>
-              </div>
-              <div
-                className={cn(
-                  'bg-primary absolute inset-x-0 bottom-0 h-0.5 rounded-full transition-opacity',
-                  isActive ? 'opacity-100' : 'opacity-0',
-                )}
-              />
-            </button>
-          );
-        })}
-      </div>
+              <Icon className="size-[18px]" />
+              <span>{label}</span>
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      {activeTab === 'profile' && <ProfileForm initialValues={{ ...user }} />}
-      {activeTab === 'password' && <ChangePasswordForm />}
+        <TabsContent value="profile">
+          <VerificationWrapper isVerified={user.isVerified}>
+            <ProfileForm initialValues={{ ...user }} />
+          </VerificationWrapper>
+        </TabsContent>
+
+        <TabsContent value="password">
+          <VerificationWrapper isVerified={user.isVerified}>
+            <ChangePasswordForm />
+          </VerificationWrapper>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
