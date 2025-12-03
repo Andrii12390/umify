@@ -82,7 +82,7 @@ export const DiagramSettings = () => {
         <div
           className={cn(
             'overflow-hidden transition-all duration-300',
-            autoSaveEnabled ? 'mt-6 max-h-30 opacity-100' : 'max-h-0 opacity-0',
+            autoSaveEnabled ? 'mt-6 max-h-50 opacity-100' : 'max-h-0 opacity-0',
           )}
         >
           <div className="border-primary/15 border-t pt-4">

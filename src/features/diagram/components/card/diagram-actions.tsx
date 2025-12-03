@@ -34,7 +34,7 @@ export const DiagramActions = ({ id, name, isFavorite, isOpen, setIsOpen, childr
       className="text-foreground/80 w-50 overflow-y-auto px-0"
       onClick={e => e.stopPropagation()}
     >
-      <DropdownMenuLabel className="text-secondary-foreground text-foreground/80 text-xs font-bold uppercase">
+      <DropdownMenuLabel className="text-secondary-foreground text-foreground/80 px-3 text-xs font-bold uppercase">
         More Actions
       </DropdownMenuLabel>
 

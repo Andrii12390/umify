@@ -84,7 +84,7 @@ export const DiagramCard = ({ id, name, isFavorite, updatedAt }: DiagramCardProp
   const { resolvedTheme = 'light' } = useTheme();
 
   return (
-    <div className="group bg-card relative mx-auto flex h-50 w-55 flex-col overflow-hidden rounded-xl border shadow-sm transition-shadow hover:shadow-lg md:h-55 md:w-60">
+    <div className="group bg-card relative mx-auto flex h-50 w-55 flex-col overflow-hidden rounded-md border shadow-sm transition-shadow hover:shadow-lg md:h-55 md:w-60">
       <DiagramPreview
         theme={resolvedTheme}
         isFavorite={isFavorite}

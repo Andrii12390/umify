@@ -180,7 +180,7 @@ export const Toolbar = ({
   return (
     <aside className="bg-card h-full p-2">
       <div className="flex h-full flex-col gap-4">
-        <div className="bg-card sticky top-2 z-[100] px-2 pb-2">
+        <div className="bg-card sticky top-2 z-2 px-2 pb-2">
           <div className="relative">
             <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
             <Input
@@ -194,8 +194,8 @@ export const Toolbar = ({
 
         {searchResults.length > 0 && (
           <div className="space-y-2">
-            <div className="px-2 text-sm font-medium tracking-wide">Search Results</div>
-            <div className="flex flex-wrap items-center gap-2 p-2">
+            <div className="px-3 text-sm font-medium tracking-wide">Search Results</div>
+            <div className="flex flex-wrap items-center gap-2 px-3">
               {searchResults.map(({ iconSrc, label, onClick }) => (
                 <Button
                   key={label}

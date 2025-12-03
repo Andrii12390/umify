@@ -32,7 +32,7 @@ export const useMenu = () => {
       {
         href: PRIVATE_ROUTES.FAVORITES,
         icon: Star,
-        label: 'My Favorites',
+        label: 'Favorites',
         isActive: pathname.startsWith(PRIVATE_ROUTES.FAVORITES),
       },
     ],
