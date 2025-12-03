@@ -43,8 +43,11 @@ model Diagram {
 
   name String
 
-  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  isFavorite Boolean @default(false) @map("is_favorite")
+
   data      Json     @default("{}")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

@@ -11,18 +11,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { deleteDiagram, updateDiagram } from '@/features/diagram/actions';
+import { deleteDiagram, updateDiagram, toggleFavorite } from '@/features/diagram/actions';
 
 import { UpdateDiagramPopup } from '../popups/update-diagram-popup';
 
 interface Props extends PropsWithChildren {
   id: string;
   name: string;
+  isFavorite: boolean;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const DiagramActions = ({ id, name, isOpen, setIsOpen, children }: Props) => (
+export const DiagramActions = ({ id, name, isFavorite, isOpen, setIsOpen, children }: Props) => (
   <DropdownMenu
     open={isOpen}
     onOpenChange={setIsOpen}
@@ -59,10 +60,12 @@ export const DiagramActions = ({ id, name, isOpen, setIsOpen, children }: Props)
         className="flex cursor-pointer items-center rounded-none px-3"
         onClick={() => {
           // TODO: implement favorites
+          console.log('asdasdasdasdasdasdasdasd', !isFavorite);
+          toggleFavorite(id, !isFavorite);
         }}
       >
         <Star className="size-4" />
-        <span>Add to favorites</span>
+        <span>{isFavorite ? 'Unfavorite' : 'Add to favorites'}</span>
       </DropdownMenuItem>
       <DropdownMenuSeparator />
       <DropdownMenuItem

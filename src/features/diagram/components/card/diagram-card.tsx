@@ -2,7 +2,7 @@
 
 import type { Dispatch, SetStateAction } from 'react';
 
-import { Clock, Eye, MoreHorizontal } from 'lucide-react';
+import { Clock, Eye, MoreHorizontal, Star } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -14,11 +14,15 @@ import { formatDate } from '@/utils';
 interface DiagramCardProps {
   id: string;
   name: string;
+  isFavorite: boolean;
   updatedAt: Date;
 }
 
-const DiagramPreview = ({ theme }: { theme: string }) => (
+const DiagramPreview = ({ theme, isFavorite }: { theme: string; isFavorite: boolean }) => (
   <div className="relative flex-1">
+    {isFavorite && (
+      <Star className="absolute top-2 left-2 z-100 size-5 fill-yellow-300 stroke-yellow-300" />
+    )}
     <Image
       src={`/diagram-preview-${theme}.png`}
       alt="Diagram preview"
@@ -31,17 +35,20 @@ const DiagramPreview = ({ theme }: { theme: string }) => (
 const ActionButton = ({
   id,
   name,
+  isFavorite,
   isOpen,
   setIsOpen,
 }: {
   id: string;
   name: string;
+  isFavorite: boolean;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => (
   <DiagramActions
     id={id}
     name={name}
+    isFavorite={isFavorite}
     isOpen={isOpen}
     setIsOpen={setIsOpen}
   >
@@ -72,16 +79,20 @@ const PublicBadge = () => (
   </div>
 );
 
-export const DiagramCard = ({ id, name, updatedAt }: DiagramCardProps) => {
+export const DiagramCard = ({ id, name, isFavorite, updatedAt }: DiagramCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { resolvedTheme = 'light' } = useTheme();
 
   return (
-    <div className="group bg-card relative mx-auto flex size-50 flex-col overflow-hidden rounded-xl border shadow-sm transition-shadow hover:shadow-lg md:size-55">
-      <DiagramPreview theme={resolvedTheme} />
+    <div className="group bg-card relative mx-auto flex h-50 w-55 flex-col overflow-hidden rounded-xl border shadow-sm transition-shadow hover:shadow-lg md:h-55 md:w-60">
+      <DiagramPreview
+        theme={resolvedTheme}
+        isFavorite={isFavorite}
+      />
       <ActionButton
         id={id}
         name={name}
+        isFavorite={isFavorite}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />

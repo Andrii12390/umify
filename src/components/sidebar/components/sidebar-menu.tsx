@@ -34,10 +34,13 @@ export const SidebarMenu = ({ items, isCollapsed }: Props) => (
               >
                 <Link
                   href={href}
-                  className={cn('flex items-center gap-3 px-3 py-2', isActive && 'text-primary')}
+                  className={cn(
+                    'text-foreground/80 flex items-center gap-3 px-3 py-2',
+                    isActive && 'text-primary',
+                  )}
                 >
-                  <Icon className="size-5" />
-                  {!isCollapsed && <span>{label}</span>}
+                  <Icon className="size-[18px]!" />
+                  {!isCollapsed && <span className="font-medium">{label}</span>}
                 </Link>
               </SidebarMenuButton>
             </TooltipTrigger>

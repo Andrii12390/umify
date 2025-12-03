@@ -5,13 +5,18 @@ import { getDiagrams } from '@/features/diagram/actions';
 import { CreateDiagramCard } from '@/features/diagram/components/card/create-diagram-card';
 import { DiagramCard } from '@/features/diagram/components/card/diagram-card';
 
-export const DiagramsGrid = async () => {
-  const res = await getDiagrams();
+interface Props {
+  fetchFavorites?: boolean;
+  showCreateCard?: boolean;
+}
+
+export const DiagramsGrid = async ({ fetchFavorites, showCreateCard = true }: Props) => {
+  const res = await getDiagrams(fetchFavorites);
 
   const diagrams = res.success ? res.data : [];
 
   return (
-    <div className="flex flex-wrap gap-4 overflow-y-auto p-4 lg:p-6">
+    <div className="lg:p-6я flex flex-wrap gap-4 overflow-y-auto p-4">
       {diagrams.map(diagram => (
         <Link
           key={diagram.id}
@@ -20,7 +25,7 @@ export const DiagramsGrid = async () => {
           <DiagramCard {...diagram} />
         </Link>
       ))}
-      <CreateDiagramCard />
+      {showCreateCard && <CreateDiagramCard />}
     </div>
   );
 };

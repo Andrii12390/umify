@@ -6,7 +6,7 @@ import type { ActionResult } from '@/types';
 import { getUser } from '@/actions';
 import { prisma } from '@/lib/prisma';
 
-export async function getDiagrams(): Promise<ActionResult<Diagram[]>> {
+export async function getDiagrams(fetchFavorites?: boolean): Promise<ActionResult<Diagram[]>> {
   try {
     const user = await getUser();
 
@@ -17,6 +17,7 @@ export async function getDiagrams(): Promise<ActionResult<Diagram[]>> {
     const diagrams = await prisma.diagram.findMany({
       where: {
         userId: user.id,
+        ...(fetchFavorites ? { isFavorite: true } : {}),
       },
       orderBy: {
         createdAt: 'asc',

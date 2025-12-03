@@ -7,7 +7,7 @@ export const DiagramsSkeleton = () => (
   <div className="flex flex-wrap gap-4 overflow-y-auto p-4 lg:p-6">
     {times(SKELETON_COUNT, idx => (
       <div
-        className="bg-card flex size-50 flex-col overflow-hidden rounded-lg shadow-sm md:size-55"
+        className="bg-card flex h-50 w-55 flex-col overflow-hidden rounded-lg shadow-sm md:h-55 md:w-60"
         key={idx}
       >
         <Skeleton className="h-full w-full rounded-none!" />
